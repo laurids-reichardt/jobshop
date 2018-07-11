@@ -3,71 +3,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
-import lightBlue from '@material-ui/core/colors/lightBlue';
-import cyan from '@material-ui/core/colors/cyan';
-import teal from '@material-ui/core/colors/teal';
-
-import green from '@material-ui/core/colors/green';
-import lightGreen from '@material-ui/core/colors/lightGreen';
-import lime from '@material-ui/core/colors/lime';
-
-const elStyles = theme => ({
-  root: {
-    height: '100%',
-    width: theme.spacing.unit * 12,
-    padding: theme.spacing.unit,
-  },
-  inner: {
-    backgroundColor: lightGreen[600],
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
-const unstyledElement = ({ classes, value }) => (
-  <div className={classes.root}>
-    <div className={classes.inner}>
-      <Typography variant="display3">{value}</Typography>
-    </div>
-  </div>
-);
-
-const Element = withStyles(elStyles)(unstyledElement);
-
-const styles = theme => ({
-  App: {
-    padding: theme.spacing.unit * 2,
-  },
-  button: {
-    margin: theme.spacing.unit * 2,
-    marginLeft: 0,
-  },
-  laneContainer: {
-    // width: '100%',
-    width: theme.spacing.unit * 108,
-    height: theme.spacing.unit * 36,
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  lightBlue: {
-    flex: 1,
-    display: 'flex',
-    // backgroundColor: lightBlue[600],
-  },
-  cyan: {
-    flex: 1,
-    display: 'flex',
-    backgroundColor: cyan[600],
-  },
-  teal: {
-    flex: 1,
-    display: 'flex',
-    backgroundColor: teal[600],
-  },
-});
+import Container from './Container';
 
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 Object.freeze(arr);
@@ -75,6 +11,15 @@ Object.freeze(arr);
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+const styles = theme => ({
+  App: {
+    padding: theme.spacing.unit * 4,
+  },
+  button: {
+    margin: theme.spacing.unit * 2,
+    marginLeft: 0,
+  },
+});
 
 class App extends React.Component {
   constructor(props) {
@@ -130,25 +75,7 @@ class App extends React.Component {
           Reset
         </Button>
 
-        <div className={classes.laneContainer}>
-          <div className={classes.lightBlue}>
-            {this.state.lane1.map(num => (
-              <Element key={num.toString()} value={num} />
-            ))}
-          </div>
-
-          <div className={classes.cyan}>
-            {this.state.lane2.map(num => (
-              <Element key={num.toString()} value={num} />
-            ))}
-          </div>
-
-          <div className={classes.teal}>
-            {this.state.lane3.map(num => (
-              <Element key={num.toString()} value={num} />
-            ))}
-          </div>
-        </div>
+        <Container state={this.state} />
       </div>
     );
   }
