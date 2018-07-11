@@ -47,7 +47,7 @@ const styles = theme => ({
   },
   laneContainer: {
     // width: '100%',
-    width: theme.spacing.unit * 120,
+    width: theme.spacing.unit * 108,
     height: theme.spacing.unit * 36,
     display: 'flex',
     flexDirection: 'column',
