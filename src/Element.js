@@ -5,12 +5,12 @@ import lightGreen from '@material-ui/core/colors/lightGreen';
 
 const styles = theme => ({
   root: {
-    height: '100%',
-    width: theme.spacing.unit * 12,
-    padding: theme.spacing.unit,
+    // height: '100%',
+    // width: theme.spacing.unit * 12,
+    // padding: theme.spacing.unit,
   },
   inner: {
-    backgroundColor: lightGreen[600],
+    // backgroundColor: lightGreen[600],
     width: '100%',
     height: '100%',
     display: 'flex',
@@ -21,8 +21,11 @@ const styles = theme => ({
 
 const Element = ({ classes, value }) => (
   <div className={classes.root}>
-    <div className={classes.inner}>
-      <Typography variant="display3">{value}</Typography>
+    <div
+      className={classes.inner}
+      style={{ backgroundColor: lightGreen[value * 100] }}
+    >
+      {/* <Typography variant="display1">{value}</Typography> */}
     </div>
   </div>
 );
