@@ -36,6 +36,17 @@ function genJobArray(jobs, machines) {
   return matrix;
 }
 
+function genJobStringMatrix(matrix) {
+  let str = `Jobs: ${matrix.length} Machines: ${matrix[0].length} \n\n`;
+  matrix.forEach(job => {
+    job.forEach(subJob => {
+      str += `${subJob.machine} ${subJob.interval}   `;
+    });
+    str += '\n';
+  });
+  return str;
+}
+
 const styles = theme => ({
   App: {
     padding: theme.spacing.unit * 4,
@@ -45,30 +56,49 @@ const styles = theme => ({
     marginLeft: 0,
   },
   numberInput: {
-    textAlign: 'right',
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 50,
+  },
+  maxIntervalLengthInput: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 150,
+  },
+  multiline: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 400,
   },
 });
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { machines: 3, jobs: 6 };
+    this.state = {
+      machines: 6,
+      jobs: 6,
+      maxInterval: 5,
+      jobsStr: 'Test',
+      matrix: [],
+    };
   }
 
   handleGenerate = () => {
     this.setState(prev => {
-      console.log(genJobArray(prev.jobs, prev.machines));
+      const matrix = genJobArray(prev.jobs, prev.machines);
+      const jobStr = genJobStringMatrix(matrix);
 
-      return prev;
+      return { jobsStr: jobStr, matrix: matrix };
     });
   };
 
   handleChange = name => event => {
+    // make sure input value is between 1 and 9
+    let value = event.target.value > 9 ? 9 : event.target.value;
+    value = event.target.value < 1 ? 1 : value;
     this.setState({
-      [name]: event.target.value,
+      [name]: value,
     });
   };
 
@@ -111,7 +141,30 @@ class App extends React.Component {
           margin="normal"
         />
 
-        <Container state={this.state} />
+        <TextField
+          id="maxInterval"
+          label="Max Interval Lenght"
+          value={this.state.maxInterval}
+          onChange={this.handleChange('maxInterval')}
+          type="number"
+          className={classes.maxIntervalLengthInput}
+          // inputProps={{ style: { textAlign: 'right' } }}
+          margin="normal"
+        />
+
+        <br />
+
+        <TextField
+          id="textarea"
+          label="Generated output"
+          placeholder="Placeholder"
+          multiline
+          value={this.state.jobsStr}
+          className={classes.multiline}
+          margin="normal"
+        />
+
+        {/* <Container state={this.state} /> */}
       </div>
     );
   }
