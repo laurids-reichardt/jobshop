@@ -50,12 +50,9 @@ function genJobStringMatrix(matrix) {
 function genMachineOrder(jobMatrix, machinesAmount, jobsAmount) {
   const machineMatrix = [];
   // fill machine matrix with empty arrays
-  for (let index = 1; index < machinesAmount; index++) {
+  for (let index = 0; index < machinesAmount; index++) {
     machineMatrix.push([]);
   }
-
-  console.log(jobMatrix);
-  console.log(machinesAmount * jobsAmount);
 
   for (let index = 0; index < machinesAmount * jobsAmount; index++) {
     let task = null;
@@ -63,15 +60,17 @@ function genMachineOrder(jobMatrix, machinesAmount, jobsAmount) {
     let randomJobNumber = 0;
     do {
       counter++;
-      randomJobNumber = getRandomInt(0, jobsAmount);
-      console.log(randomJobNumber);
+      randomJobNumber = getRandomInt(0, jobsAmount - 1);
       task = jobMatrix[randomJobNumber].shift();
-      console.log(task);
     } while (counter < 100 && (task === null || task === undefined));
-    machineMatrix[task.machine].push({ job: randomJobNumber, index: index });
-    console.log('machineMatrix: ');
-    console.log(machineMatrix);
+
+    machineMatrix[task.machine].push({
+      job: randomJobNumber,
+      index: index,
+    });
   }
+
+  return machineMatrix;
 }
 
 const styles = theme => ({
@@ -108,24 +107,34 @@ class App extends React.Component {
       variants: 100,
       maxInterval: 5,
       jobsStr: 'Test',
-      matrix: [],
+      jobMatrix: [],
+      machineMatrix: [],
     };
   }
 
   handleGenerate = () => {
     this.setState(
       prev => {
-        const matrix = genJobArray(prev.jobs, prev.machines, prev.maxInterval);
-        const jobStr = genJobStringMatrix(matrix);
+        const jobMatrix = genJobArray(
+          prev.jobs,
+          prev.machines,
+          prev.maxInterval
+        );
+        const jobStr = genJobStringMatrix(jobMatrix);
+        const machineMatrix = genMachineOrder(
+          jobMatrix,
+          this.state.machines,
+          this.state.jobs
+        );
 
-        return { jobsStr: jobStr, matrix: matrix };
+        return {
+          jobsStr: jobStr,
+          jobMatrix: jobMatrix,
+          machineMatrix: machineMatrix,
+        };
       },
       () => {
-        genMachineOrder(
-          this.state.matrix,
-          this.state.jobs,
-          this.state.machines
-        );
+        console.log(this.state.machineMatrix);
       }
     );
   };
