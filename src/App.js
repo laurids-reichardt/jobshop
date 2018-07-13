@@ -73,6 +73,38 @@ function genMachineOrder(jobMatrix, machinesAmount, jobsAmount) {
   return machineMatrix;
 }
 
+function genMachineOrderForGant(machineMatrix, jobMatrix, machinesAmount, jobsAmount){
+  console.log("Hallo");
+  console.log(jobMatrix);
+
+  const gantMatrix = [];
+
+  for(let index = 0; index < machinesAmount; index++){
+    gantMatrix.push([]);
+  }
+
+  console.log(machinesAmount);
+
+  for(let index = 0; index < machinesAmount * jobsAmount; index ++){
+    let machineEntry = null;
+    let counter = 0;
+    machineEntry = machineMatrix[1].shift();
+    let jobNumber = machineEntry.job;
+    console.log("Hallo2");
+    console.log(machineEntry);
+    console.log("jobNumber " + jobNumber);
+
+    do{
+      counter ++;
+      console.log(counter);
+    }while(counter < 10);
+  }
+
+
+  return null;
+}
+
+
 const styles = theme => ({
   App: {
     padding: theme.spacing.unit * 4,
@@ -124,6 +156,13 @@ class App extends React.Component {
         const machineMatrix = genMachineOrder(
           jobMatrix,
           this.state.machines,
+          this.state.jobs
+        );
+
+        const gantMatrix = genMachineOrderForGant(
+          machineMatrix, 
+          jobMatrix, 
+          this.state.machines, 
           this.state.jobs
         );
 
