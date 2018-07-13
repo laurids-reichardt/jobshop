@@ -47,9 +47,32 @@ function genJobStringMatrix(matrix) {
   return str;
 }
 
-// function genMachineOrder(matrix, machines, jobs) {
+function genMachineOrder(jobMatrix, machinesAmount, jobsAmount) {
+  const machineMatrix = [];
+  // fill machine matrix with empty arrays
+  for (let index = 1; index < machinesAmount; index++) {
+    machineMatrix.push([]);
+  }
 
-// }
+  console.log(jobMatrix);
+  console.log(machinesAmount * jobsAmount);
+
+  for (let index = 0; index < machinesAmount * jobsAmount; index++) {
+    let task = null;
+    let counter = 0;
+    let randomJobNumber = 0;
+    do {
+      counter++;
+      randomJobNumber = getRandomInt(0, jobsAmount);
+      console.log(randomJobNumber);
+      task = jobMatrix[randomJobNumber].shift();
+      console.log(task);
+    } while (counter < 100 && (task === null || task === undefined));
+    machineMatrix[task.machine].push({ job: randomJobNumber, index: index });
+    console.log('machineMatrix: ');
+    console.log(machineMatrix);
+  }
+}
 
 const styles = theme => ({
   App: {
@@ -80,8 +103,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      machines: 6,
-      jobs: 6,
+      machines: 2,
+      jobs: 3,
       variants: 100,
       maxInterval: 5,
       jobsStr: 'Test',
@@ -90,14 +113,21 @@ class App extends React.Component {
   }
 
   handleGenerate = () => {
-    this.setState(prev => {
-      const matrix = genJobArray(prev.jobs, prev.machines, prev.maxInterval);
-      const jobStr = genJobStringMatrix(matrix);
+    this.setState(
+      prev => {
+        const matrix = genJobArray(prev.jobs, prev.machines, prev.maxInterval);
+        const jobStr = genJobStringMatrix(matrix);
 
-      console.log(matrix);
-
-      return { jobsStr: jobStr, matrix: matrix };
-    });
+        return { jobsStr: jobStr, matrix: matrix };
+      },
+      () => {
+        genMachineOrder(
+          this.state.matrix,
+          this.state.jobs,
+          this.state.machines
+        );
+      }
+    );
   };
 
   handleChange = name => event => {
@@ -114,18 +144,16 @@ class App extends React.Component {
     return (
       <div className={classes.App}>
         <Typography variant="title" gutterBottom>
-          Job Shop Problem
+          Job Shop Problem{' '}
         </Typography>
-
         <Button
           onClick={this.handleGenerate}
           className={classes.button}
           variant="contained"
           color="primary"
         >
-          Generate
+          Generate{' '}
         </Button>
-
         <TextField
           id="machines"
           label="Machines"
@@ -135,7 +163,6 @@ class App extends React.Component {
           className={classes.numberInput}
           margin="normal"
         />
-
         <TextField
           id="jobs"
           label="Jobs"
@@ -145,7 +172,6 @@ class App extends React.Component {
           className={classes.numberInput}
           margin="normal"
         />
-
         <TextField
           id="variants"
           label="Variants"
@@ -155,7 +181,6 @@ class App extends React.Component {
           className={classes.numberInput}
           margin="normal"
         />
-
         <TextField
           id="maxInterval"
           label="Max Interval Lenght"
@@ -165,9 +190,7 @@ class App extends React.Component {
           className={classes.maxIntervalLengthInput}
           margin="normal"
         />
-
         <br />
-
         <TextField
           id="textarea"
           label="Generated output"
@@ -177,8 +200,7 @@ class App extends React.Component {
           className={classes.multiline}
           margin="normal"
         />
-
-        {/* <Container state={this.state} /> */}
+        {/* <Container state={this.state} /> */}{' '}
       </div>
     );
   }
