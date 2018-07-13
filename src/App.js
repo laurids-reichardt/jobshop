@@ -21,14 +21,14 @@ function shuffle(a) {
   return a;
 }
 
-function genJobArray(jobs, machines) {
+function genJobArray(jobs, machines, maxIntervalLength) {
   let matrix = [];
   // for every machine create an array of jobs/interval
   for (let i = 0; i < jobs; i++) {
     let job = [];
     // for every job create a pair of machine & interval and push to array
     for (let j = 0; j < machines; j++) {
-      job.push({ machine: j, interval: getRandomInt(1, 4) });
+      job.push({ machine: j, interval: getRandomInt(1, maxIntervalLength) });
     }
     // shuffle machine lane order and push to matrix array
     matrix.push(shuffle(job));
@@ -39,13 +39,17 @@ function genJobArray(jobs, machines) {
 function genJobStringMatrix(matrix) {
   let str = `Jobs: ${matrix.length} Machines: ${matrix[0].length} \n\n`;
   matrix.forEach(job => {
-    job.forEach(subJob => {
-      str += `${subJob.machine} ${subJob.interval}   `;
+    job.forEach(task => {
+      str += `${task.machine} ${task.interval}   `;
     });
     str += '\n';
   });
   return str;
 }
+
+// function genMachineOrder(matrix, machines, jobs) {
+
+// }
 
 const styles = theme => ({
   App: {
@@ -78,6 +82,7 @@ class App extends React.Component {
     this.state = {
       machines: 6,
       jobs: 6,
+      variants: 100,
       maxInterval: 5,
       jobsStr: 'Test',
       matrix: [],
@@ -86,8 +91,10 @@ class App extends React.Component {
 
   handleGenerate = () => {
     this.setState(prev => {
-      const matrix = genJobArray(prev.jobs, prev.machines);
+      const matrix = genJobArray(prev.jobs, prev.machines, prev.maxInterval);
       const jobStr = genJobStringMatrix(matrix);
+
+      console.log(matrix);
 
       return { jobsStr: jobStr, matrix: matrix };
     });
@@ -126,7 +133,6 @@ class App extends React.Component {
           onChange={this.handleChange('machines')}
           type="number"
           className={classes.numberInput}
-          // inputProps={{ style: { textAlign: 'right' } }}
           margin="normal"
         />
 
@@ -137,7 +143,16 @@ class App extends React.Component {
           onChange={this.handleChange('jobs')}
           type="number"
           className={classes.numberInput}
-          // inputProps={{ style: { textAlign: 'right' } }}
+          margin="normal"
+        />
+
+        <TextField
+          id="variants"
+          label="Variants"
+          value={this.state.variants}
+          onChange={this.handleChange('variants')}
+          type="number"
+          className={classes.numberInput}
           margin="normal"
         />
 
@@ -148,7 +163,6 @@ class App extends React.Component {
           onChange={this.handleChange('maxInterval')}
           type="number"
           className={classes.maxIntervalLengthInput}
-          // inputProps={{ style: { textAlign: 'right' } }}
           margin="normal"
         />
 
