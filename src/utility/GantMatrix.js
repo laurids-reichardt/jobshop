@@ -49,18 +49,26 @@ export function genMachineOrderForGant(
 function insertJobInGant(gantMatrix, jobMatrix2, nextJobNumber) {
   let task = jobMatrix2[nextJobNumber].shift();
 
-  if (task.start - gantMatrix[task.machine].length > 0) {
-    let interval = task.start - gantMatrix[task.machine].length;
-    gantMatrix[task.machine] = gantMatrix[task.machine].concat(
-      getArrayWithJobNumber(interval, -1)
-    );
+  if (gantMatrix[task.machine].length === 0) {
     gantMatrix[task.machine] = gantMatrix[task.machine].concat(
       getArrayWithJobNumber(task.interval, nextJobNumber)
     );
   } else {
-    gantMatrix[task.machine] = gantMatrix[task.machine].concat(
-      getArrayWithJobNumber(task.interval, nextJobNumber)
-    );
+    if (task.start - gantMatrix[task.machine].length > 0) {
+      let interval = task.start - gantMatrix[task.machine].length;
+      gantMatrix[task.machine] = gantMatrix[task.machine].concat(
+        getArrayWithJobNumber(interval, -1)
+      );
+      gantMatrix[task.machine] = gantMatrix[task.machine].concat(
+        getArrayWithJobNumber(task.interval, nextJobNumber)
+      );
+    } else {
+      if (searchFreeTimeSlot(gantMatrix, task, nextJobNumber) === false) {
+        gantMatrix[task.machine] = gantMatrix[task.machine].concat(
+          getArrayWithJobNumber(task.interval, nextJobNumber)
+        );
+      }
+    }
   }
 }
 
@@ -71,6 +79,34 @@ function getArrayWithJobNumber(interval, jobnumber) {
   }
   console.log(array);
   return array;
+}
+
+function searchFreeTimeSlot(gantMatrix, task, nextJobNumber) {
+  let bool = false;
+  let taskStartTime = task.start;
+  let gantMatrixMachineLength = gantMatrix[task.machine].length;
+
+  for (
+    let index = taskStartTime + 1;
+    index < gantMatrixMachineLength + 1;
+    index++
+  ) {
+    let amountFreeTimeSlot = 0;
+    if (gantMatrix[task.machine][index] === -1) {
+      amountFreeTimeSlot++;
+      if (amountFreeTimeSlot === task.interval) {
+        bool = true;
+        for (
+          let index2 = index + 1 - task.interval;
+          index2 < index + 1;
+          index++
+        ) {
+          gantMatrix[task.machine][nextJobNumber];
+        }
+      }
+    }
+  }
+  return bool;
 }
 
 // function insertJobInGant(gantMatrix, jobMatrix2, nextJobNumber) {
