@@ -1,31 +1,4 @@
-function generateGantMatrix(matrix, machinesAmount, jobsAmount) {
-  const jobMatrix = JSON.parse(JSON.stringify(matrix));
-  let gantMatrix = [];
-  // fill machine matrix with empty arrays
-  for (let index = 0; index < machinesAmount; index++) {
-    gantMatrix.push([]);
-  }
-
-  for (let index = 0; index < machinesAmount * jobsAmount; index++) {
-    let task = null;
-    let counter = 0;
-    let randomJobNumber = 0;
-    do {
-      counter++;
-      randomJobNumber = getRandomInt(0, jobsAmount - 1);
-      task = jobMatrix[randomJobNumber].shift();
-    } while (counter < 100 && (task === null || task === undefined));
-
-    for (let j = 0; j < task.interval; j++) {
-      gantMatrix[task.machine].push(randomJobNumber);
-    }
-  }
-
-  console.log(gantMatrix);
-  return gantMatrix;
-}
-
-function genMachineOrderForGant(
+export function genMachineOrderForGant(
   machineMatrix,
   jobMatrix,
   machinesAmount,
@@ -64,11 +37,11 @@ function genMachineOrderForGant(
       }
     }
   }
-  console.log('JobMatrix2: ');
+  console.log("JobMatrix2: ");
   console.log(jobMatrix2);
-  console.log('machineMatrix ');
+  console.log("machineMatrix ");
   console.log(machineMatrix);
-  console.log('Abgearbeitete machineMatrix2:');
+  console.log("Abgearbeitete machineMatrix2:");
   console.log(machineMatrix2);
   return gantMatrix;
 }
@@ -97,7 +70,7 @@ function insertJobInGant(gantMatrix, jobMatrix2, nextJobNumber) {
     // console.log(jobMatrix2[nextJobNumber][0] + " " + jobMatrix2[nextJobNumber][1] + " " + jobMatrix2[nextJobNumber][0].earliestStart + " " + jobMatrix2[nextJobNumber][1].earliestStart);
     earliestStartNextTask =
       earliestStartCurrentTask + currentTaskObject.interval;
-    console.log('Überschriebener earliestStartWert: ' + earliestStartNextTask);
+    console.log("Überschriebener earliestStartWert: " + earliestStartNextTask);
     console.log(jobMatrix2[nextJobNumber][1].earliestStart);
   }
   if (currentTaskObject === undefined) {
