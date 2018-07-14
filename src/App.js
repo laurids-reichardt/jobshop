@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
+import ReactJson from 'react-json-view';
 
 import Container from './Container';
 
@@ -33,6 +34,8 @@ function genJobArray(jobs, machines, maxIntervalLength) {
     // shuffle machine lane order and push to matrix array
     matrix.push(shuffle(job));
   }
+  console.log(matrix[1]);
+
   return matrix;
 }
 
@@ -47,7 +50,8 @@ function genJobStringMatrix(matrix) {
   return str;
 }
 
-function genMachineOrder(jobMatrix, machinesAmount, jobsAmount) {
+function genMachineOrder(matrix, machinesAmount, jobsAmount) {
+  const jobMatrix = JSON.parse(JSON.stringify(matrix));
   const machineMatrix = [];
   // fill machine matrix with empty arrays
   for (let index = 0; index < machinesAmount; index++) {
@@ -96,6 +100,10 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     width: 400,
   },
+  jsonViewContainer: {
+    width: '100%',
+    display: 'flex',
+  },
 });
 
 class App extends React.Component {
@@ -136,7 +144,7 @@ class App extends React.Component {
         };
       },
       () => {
-        console.log(this.state.machineMatrix);
+        // console.log(this.state.machineMatrix);
       }
     );
   };
@@ -155,16 +163,18 @@ class App extends React.Component {
     return (
       <div className={classes.App}>
         <Typography variant="title" gutterBottom>
-          Job Shop Problem{' '}
+          Job Shop Problem
         </Typography>
+
         <Button
           onClick={this.handleGenerate}
           className={classes.button}
           variant="contained"
           color="primary"
         >
-          Generate{' '}
+          Generate
         </Button>
+
         <TextField
           id="machines"
           label="Machines"
@@ -174,6 +184,7 @@ class App extends React.Component {
           className={classes.numberInput}
           margin="normal"
         />
+
         <TextField
           id="jobs"
           label="Jobs"
@@ -183,6 +194,7 @@ class App extends React.Component {
           className={classes.numberInput}
           margin="normal"
         />
+
         <TextField
           id="variants"
           label="Variants"
@@ -192,6 +204,7 @@ class App extends React.Component {
           className={classes.numberInput}
           margin="normal"
         />
+
         <TextField
           id="maxInterval"
           label="Max Interval Lenght"
@@ -201,7 +214,9 @@ class App extends React.Component {
           className={classes.maxIntervalLengthInput}
           margin="normal"
         />
+
         <br />
+
         <TextField
           id="textarea"
           label="Generated output"
@@ -211,7 +226,26 @@ class App extends React.Component {
           className={classes.multiline}
           margin="normal"
         />
-        {/* <Container state={this.state} /> */}{' '}
+
+        <div className={classes.jsonViewContainer}>
+          <ReactJson
+            src={this.state.jobMatrix}
+            theme="monokai"
+            enableClipboard={false}
+            displayObjectSize={false}
+            displayDataTypes={false}
+            style={{ flex: 1 }}
+          />
+
+          <ReactJson
+            src={this.state.machineMatrix}
+            theme="monokai"
+            enableClipboard={false}
+            displayObjectSize={false}
+            displayDataTypes={false}
+            style={{ flex: 1 }}
+          />
+        </div>
       </div>
     );
   }
