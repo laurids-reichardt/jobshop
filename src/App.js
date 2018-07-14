@@ -44,7 +44,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      machines: 3,
+      machines: 2,
       jobs: 2,
       variants: 100,
       maxInterval: 4,
