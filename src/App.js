@@ -42,14 +42,17 @@ function generateJobMatrix(jobs, machines, maxIntervalLength) {
   // for every task inside a job, add the earliest possible task start time
   for (let index = 0; index < jobs; index++) {
     let currentInterval = 0;
+    let counter = 0;
 
     matrix[index] = matrix[index].map(task => {
       let adjustedTask = {
+        number: counter,
         machine: task.machine,
         interval: task.interval,
         start: currentInterval,
       };
       currentInterval += task.interval;
+      counter++;
       return adjustedTask;
     });
   }
@@ -96,8 +99,31 @@ function genMachineOrder(matrix, machinesAmount, jobsAmount) {
   return machineMatrix;
 }
 
-function generateGantMatrix(jobMatrix, machinesAmount, jobsAmount) {
-  const matrix = JSON.parse(JSON.stringify(jobMatrix));
+function generateGantMatrix(matrix, machinesAmount, jobsAmount) {
+  const jobMatrix = JSON.parse(JSON.stringify(matrix));
+  let gantMatrix = [];
+  // fill machine matrix with empty arrays
+  for (let index = 0; index < machinesAmount; index++) {
+    gantMatrix.push([]);
+  }
+
+  for (let index = 0; index < machinesAmount * jobsAmount; index++) {
+    let task = null;
+    let counter = 0;
+    let randomJobNumber = 0;
+    do {
+      counter++;
+      randomJobNumber = getRandomInt(0, jobsAmount - 1);
+      task = jobMatrix[randomJobNumber].shift();
+    } while (counter < 100 && (task === null || task === undefined));
+
+    for (let j = 0; j < task.interval; j++) {
+      gantMatrix[task.machine].push(randomJobNumber);
+    }
+  }
+
+  console.log(gantMatrix);
+  return gantMatrix;
 }
 
 const styles = theme => ({
@@ -136,10 +162,11 @@ class App extends React.Component {
       machines: 2,
       jobs: 3,
       variants: 100,
-      maxInterval: 3,
+      maxInterval: 1,
       jobsStr: 'Test',
       jobMatrix: [],
       machineMatrix: [],
+      gantMatrix: [],
     };
   }
 
@@ -160,10 +187,17 @@ class App extends React.Component {
           prev.jobs
         );
 
+        const gantMatrix = generateGantMatrix(
+          jobMatrix,
+          prev.machines,
+          prev.jobs
+        );
+
         return {
           jobsStr: jobStr,
           jobMatrix: jobMatrix,
           machineMatrix: machineMatrix,
+          gantMatrix: gantMatrix,
         };
       },
       () => {
@@ -252,6 +286,7 @@ class App extends React.Component {
 
         <div className={classes.jsonViewContainer}>
           <ReactJson
+            name="jobMatrix"
             src={this.state.jobMatrix}
             theme="monokai"
             enableClipboard={false}
@@ -261,6 +296,7 @@ class App extends React.Component {
           />
 
           <ReactJson
+            name="machineMatrix"
             src={this.state.machineMatrix}
             theme="monokai"
             enableClipboard={false}
@@ -268,7 +304,19 @@ class App extends React.Component {
             displayDataTypes={false}
             style={{ flex: 1 }}
           />
+
+          <ReactJson
+            name="gantMatrix"
+            src={this.state.gantMatrix}
+            theme="monokai"
+            enableClipboard={false}
+            displayObjectSize={false}
+            displayDataTypes={false}
+            style={{ flex: 1 }}
+          />
         </div>
+
+        <Container />
       </div>
     );
   }
