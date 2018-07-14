@@ -22,19 +22,37 @@ function shuffle(a) {
   return a;
 }
 
-function genJobArray(jobs, machines, maxIntervalLength) {
-  let matrix = [];
+function generateJobMatrix(jobs, machines, maxIntervalLength) {
+  const matrix = [];
+
   // for every machine create an array of jobs/interval
   for (let i = 0; i < jobs; i++) {
     let job = [];
     // for every job create a pair of machine & interval and push to array
     for (let j = 0; j < machines; j++) {
-      job.push({ machine: j, interval: getRandomInt(1, maxIntervalLength) });
+      job.push({
+        machine: j,
+        interval: getRandomInt(1, maxIntervalLength),
+      });
     }
     // shuffle machine lane order and push to matrix array
     matrix.push(shuffle(job));
   }
-  console.log(matrix[1]);
+
+  // for every task inside a job, add the earliest possible task start time
+  for (let index = 0; index < jobs; index++) {
+    let currentInterval = 0;
+
+    matrix[index] = matrix[index].map(task => {
+      let adjustedTask = {
+        machine: task.machine,
+        interval: task.interval,
+        start: currentInterval,
+      };
+      currentInterval += task.interval;
+      return adjustedTask;
+    });
+  }
 
   return matrix;
 }
@@ -69,12 +87,17 @@ function genMachineOrder(matrix, machinesAmount, jobsAmount) {
     } while (counter < 100 && (task === null || task === undefined));
 
     machineMatrix[task.machine].push({
-      job: randomJobNumber,
       index: index,
+      job: randomJobNumber,
+      time: task.interval,
     });
   }
 
   return machineMatrix;
+}
+
+function generateGantMatrix(jobMatrix, machinesAmount, jobsAmount) {
+  const matrix = JSON.parse(JSON.stringify(jobMatrix));
 }
 
 const styles = theme => ({
@@ -113,7 +136,7 @@ class App extends React.Component {
       machines: 2,
       jobs: 3,
       variants: 100,
-      maxInterval: 5,
+      maxInterval: 3,
       jobsStr: 'Test',
       jobMatrix: [],
       machineMatrix: [],
@@ -123,7 +146,7 @@ class App extends React.Component {
   handleGenerate = () => {
     this.setState(
       prev => {
-        const jobMatrix = genJobArray(
+        const jobMatrix = generateJobMatrix(
           prev.jobs,
           prev.machines,
           prev.maxInterval
@@ -217,7 +240,7 @@ class App extends React.Component {
 
         <br />
 
-        <TextField
+        {/* <TextField
           id="textarea"
           label="Generated output"
           placeholder="Placeholder"
@@ -225,7 +248,7 @@ class App extends React.Component {
           value={this.state.jobsStr}
           className={classes.multiline}
           margin="normal"
-        />
+        /> */}
 
         <div className={classes.jsonViewContainer}>
           <ReactJson
