@@ -37,40 +37,34 @@ export function genMachineOrderForGant(
       }
     }
   }
-  console.log('JobMatrix2: ');
-  console.log(jobMatrix2);
-  console.log('machineMatrix ');
-  console.log(machineMatrix);
-  console.log('Abgearbeitete machineMatrix2:');
-  console.log(machineMatrix2);
   return gantMatrix;
 }
 
 function insertJobInGant(gantMatrix, jobMatrix2, nextJobNumber) {
   let task = jobMatrix2[nextJobNumber].shift();
 
-  if (gantMatrix[task.machine].length === 0) {
+  // if (gantMatrix[task.machine].length === 0) {
+  //   gantMatrix[task.machine] = gantMatrix[task.machine].concat(
+  //     getArrayWithJobNumber(task.interval, nextJobNumber)
+  //   );
+  // } else {
+  if (task.start - gantMatrix[task.machine].length > 0) {
+    let interval = task.start - gantMatrix[task.machine].length;
+    gantMatrix[task.machine] = gantMatrix[task.machine].concat(
+      getArrayWithJobNumber(interval, -1)
+    );
     gantMatrix[task.machine] = gantMatrix[task.machine].concat(
       getArrayWithJobNumber(task.interval, nextJobNumber)
     );
   } else {
-    if (task.start - gantMatrix[task.machine].length > 0) {
-      let interval = task.start - gantMatrix[task.machine].length;
-      gantMatrix[task.machine] = gantMatrix[task.machine].concat(
-        getArrayWithJobNumber(interval, -1)
-      );
+    if (searchFreeTimeSlot(gantMatrix, task, nextJobNumber) === false) {
       gantMatrix[task.machine] = gantMatrix[task.machine].concat(
         getArrayWithJobNumber(task.interval, nextJobNumber)
       );
-    } else {
-      if (searchFreeTimeSlot(gantMatrix, task, nextJobNumber) === false) {
-        gantMatrix[task.machine] = gantMatrix[task.machine].concat(
-          getArrayWithJobNumber(task.interval, nextJobNumber)
-        );
-      }
     }
   }
 }
+// }
 
 function getArrayWithJobNumber(interval, jobnumber) {
   const array = [];
@@ -108,53 +102,3 @@ function searchFreeTimeSlot(gantMatrix, task, nextJobNumber) {
   }
   return bool;
 }
-
-// function insertJobInGant(gantMatrix, jobMatrix2, nextJobNumber) {
-//   let machineArrayLength = null;
-
-//   //maschineBestimmen anhand Job
-//   //aktuelleLängeDerMaschineBestimmen
-
-//   else {
-//     currentTaskObject = jobMatrix2[nextJobNumber][0];
-//     nextTaskObject = jobMatrix2[nextJobNumber][1];
-//     earliestStartCurrentTask = jobMatrix2[nextJobNumber][0].earliestStart;
-//     earliestStartNextTask = jobMatrix2[nextJobNumber][1].earliestStart;
-//     machineArrayLength =
-//       gantMatrix[jobMatrix2[nextJobNumber][0].machine].length;
-
-//     // console.log(currentTaskObject + " " + nextTaskObject + " " + earliestStartCurrentTask + " " + earliestStartNextTask);
-//     // console.log(jobMatrix2[nextJobNumber][0] + " " + jobMatrix2[nextJobNumber][1] + " " + jobMatrix2[nextJobNumber][0].earliestStart + " " + jobMatrix2[nextJobNumber][1].earliestStart);
-//     earliestStartNextTask =
-//       earliestStartCurrentTask + currentTaskObject.interval;
-//     console.log("Überschriebener earliestStartWert: " + earliestStartNextTask);
-//     console.log(jobMatrix2[nextJobNumber][1].earliestStart);
-//   }
-//   if (currentTaskObject === undefined) {
-//   } else {
-//     if (earliestStartCurrentTask - machineArrayLength > 0) {
-//       for (
-//         let index = machineArrayLength;
-//         index <= earliestStartCurrentTask;
-//         index++
-//       ) {
-//         gantMatrix[currentTaskObject.machine].push({ jobNummer: -1 });
-//       }
-//     } else {
-//       for (
-//         let index = earliestStartCurrentTask;
-//         index < machineArrayLength;
-//         index++
-//       ) {
-//         let amountFreeTimeSlot = 0;
-//         if (gantMatrix[index].jobNummer === -1) {
-//           amountFreeTimeSlot++;
-//           if (amountFreeTimeSlot === jobMatrix2[nextJobNumber][0].interval) {
-//             //eintragen
-//           }
-//         }
-//       }
-//     }
-//     jobMatrix2[nextJobNumber].shift();
-//   }
-// }
