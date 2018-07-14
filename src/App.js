@@ -45,9 +45,9 @@ class App extends React.Component {
     super(props);
     this.state = {
       machines: 3,
-      jobs: 1,
+      jobs: 2,
       variants: 100,
-      maxInterval: 1,
+      maxInterval: 4,
       jobsStr: "Test",
       jobMatrix: [],
       machineMatrix: [],

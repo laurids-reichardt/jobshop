@@ -47,57 +47,71 @@ export function genMachineOrderForGant(
 }
 
 function insertJobInGant(gantMatrix, jobMatrix2, nextJobNumber) {
-  let currentTaskObject = null;
-  let nextTaskObject = null;
-  let earliestStartCurrentTask = null;
-  let earliestStartNextTask = null;
-  let machineArrayLength = null;
+  let task = jobMatrix2[nextJobNumber].shift();
 
-  //maschineBestimmen anhand Job
-  //aktuelleLängeDerMaschineBestimmen
-
-  //überschreiben des nächsten Startwertes und löschen des 1. Tasks
-  if (jobMatrix2[nextJobNumber][1] === undefined) {
-  } else {
-    currentTaskObject = jobMatrix2[nextJobNumber][0];
-    nextTaskObject = jobMatrix2[nextJobNumber][1];
-    earliestStartCurrentTask = jobMatrix2[nextJobNumber][0].earliestStart;
-    earliestStartNextTask = jobMatrix2[nextJobNumber][1].earliestStart;
-    machineArrayLength =
-      gantMatrix[jobMatrix2[nextJobNumber][0].machine].length;
-
-    // console.log(currentTaskObject + " " + nextTaskObject + " " + earliestStartCurrentTask + " " + earliestStartNextTask);
-    // console.log(jobMatrix2[nextJobNumber][0] + " " + jobMatrix2[nextJobNumber][1] + " " + jobMatrix2[nextJobNumber][0].earliestStart + " " + jobMatrix2[nextJobNumber][1].earliestStart);
-    earliestStartNextTask =
-      earliestStartCurrentTask + currentTaskObject.interval;
-    console.log("Überschriebener earliestStartWert: " + earliestStartNextTask);
-    console.log(jobMatrix2[nextJobNumber][1].earliestStart);
-  }
-  if (currentTaskObject === undefined) {
-  } else {
-    if (earliestStartCurrentTask - machineArrayLength > 0) {
-      for (
-        let index = machineArrayLength;
-        index <= earliestStartCurrentTask;
-        index++
-      ) {
-        gantMatrix[currentTaskObject.machine].push({ jobNummer: -1 });
-      }
-    } else {
-      for (
-        let index = earliestStartCurrentTask;
-        index < machineArrayLength;
-        index++
-      ) {
-        let amountFreeTimeSlot = 0;
-        if (gantMatrix[index].jobNummer === -1) {
-          amountFreeTimeSlot++;
-          if (amountFreeTimeSlot === jobMatrix2[nextJobNumber][0].interval) {
-            //eintragen
-          }
-        }
-      }
-    }
-    jobMatrix2[nextJobNumber].shift();
+  if (gantMatrix[task.machine].length === 0) {
+    gantMatrix[task.machine].concat(
+      getArrayWithJobNumber(task.interval, nextJobNumber)
+    );
+  } else if (task.start - gantMatrix[task.machine].length > 0) {
+    let interval = task.start - gantMatrix[task.machine].length;
+    gantMatrix[task.machine].concat(getArrayWithJobNumber(interval, -1));
   }
 }
+
+function getArrayWithJobNumber(interval, jobnumber) {
+  const array = [];
+  for (let index = 0; index < interval; index++) {
+    array.push(jobnumber);
+  }
+}
+
+// function insertJobInGant(gantMatrix, jobMatrix2, nextJobNumber) {
+//   let machineArrayLength = null;
+
+//   //maschineBestimmen anhand Job
+//   //aktuelleLängeDerMaschineBestimmen
+
+//   else {
+//     currentTaskObject = jobMatrix2[nextJobNumber][0];
+//     nextTaskObject = jobMatrix2[nextJobNumber][1];
+//     earliestStartCurrentTask = jobMatrix2[nextJobNumber][0].earliestStart;
+//     earliestStartNextTask = jobMatrix2[nextJobNumber][1].earliestStart;
+//     machineArrayLength =
+//       gantMatrix[jobMatrix2[nextJobNumber][0].machine].length;
+
+//     // console.log(currentTaskObject + " " + nextTaskObject + " " + earliestStartCurrentTask + " " + earliestStartNextTask);
+//     // console.log(jobMatrix2[nextJobNumber][0] + " " + jobMatrix2[nextJobNumber][1] + " " + jobMatrix2[nextJobNumber][0].earliestStart + " " + jobMatrix2[nextJobNumber][1].earliestStart);
+//     earliestStartNextTask =
+//       earliestStartCurrentTask + currentTaskObject.interval;
+//     console.log("Überschriebener earliestStartWert: " + earliestStartNextTask);
+//     console.log(jobMatrix2[nextJobNumber][1].earliestStart);
+//   }
+//   if (currentTaskObject === undefined) {
+//   } else {
+//     if (earliestStartCurrentTask - machineArrayLength > 0) {
+//       for (
+//         let index = machineArrayLength;
+//         index <= earliestStartCurrentTask;
+//         index++
+//       ) {
+//         gantMatrix[currentTaskObject.machine].push({ jobNummer: -1 });
+//       }
+//     } else {
+//       for (
+//         let index = earliestStartCurrentTask;
+//         index < machineArrayLength;
+//         index++
+//       ) {
+//         let amountFreeTimeSlot = 0;
+//         if (gantMatrix[index].jobNummer === -1) {
+//           amountFreeTimeSlot++;
+//           if (amountFreeTimeSlot === jobMatrix2[nextJobNumber][0].interval) {
+//             //eintragen
+//           }
+//         }
+//       }
+//     }
+//     jobMatrix2[nextJobNumber].shift();
+//   }
+// }
