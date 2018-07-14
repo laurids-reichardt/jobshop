@@ -1,57 +1,57 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import { withStyles } from '@material-ui/core/styles';
-import ReactJson from 'react-json-view';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import { withStyles } from "@material-ui/core/styles";
+import ReactJson from "react-json-view";
 
-import Container from './Container';
+import Container from "./Container";
 
-import { generateJobMatrix, genJobStringMatrix } from './utility/JobMatrix';
-import { genMachineOrder } from './utility/MachineMatrix';
-import { genMachineOrderForGant } from './utility/GantMatrix';
+import { generateJobMatrix, genJobStringMatrix } from "./utility/JobMatrix";
+import { genMachineOrder } from "./utility/MachineMatrix";
+import { genMachineOrderForGant } from "./utility/GantMatrix";
 
 const styles = theme => ({
   App: {
-    padding: theme.spacing.unit * 4,
+    padding: theme.spacing.unit * 4
   },
   button: {
     margin: theme.spacing.unit * 2,
-    marginLeft: 0,
+    marginLeft: 0
   },
   numberInput: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 50,
+    width: 50
   },
   maxIntervalLengthInput: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 150,
+    width: 150
   },
   multiline: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 400,
+    width: 400
   },
   jsonViewContainer: {
-    width: '100%',
-    display: 'flex',
-  },
+    width: "100%",
+    display: "flex"
+  }
 });
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      machines: 2,
-      jobs: 9,
+      machines: 3,
+      jobs: 4,
       variants: 100,
-      maxInterval: 3,
-      jobsStr: 'Test',
+      maxInterval: 5,
+      jobsStr: "Test",
       jobMatrix: [],
       machineMatrix: [],
-      gantMatrix: [],
+      gantMatrix: []
     };
   }
 
@@ -90,7 +90,7 @@ class App extends React.Component {
     let value = event.target.value > 9 ? 9 : event.target.value;
     value = event.target.value < 1 ? 1 : value;
     this.setState({
-      [name]: value,
+      [name]: value
     });
   };
 
@@ -115,7 +115,7 @@ class App extends React.Component {
           id="machines"
           label="Machines"
           value={this.state.machines}
-          onChange={this.handleChange('machines')}
+          onChange={this.handleChange("machines")}
           type="number"
           className={classes.numberInput}
           margin="normal"
@@ -125,7 +125,7 @@ class App extends React.Component {
           id="jobs"
           label="Jobs"
           value={this.state.jobs}
-          onChange={this.handleChange('jobs')}
+          onChange={this.handleChange("jobs")}
           type="number"
           className={classes.numberInput}
           margin="normal"
@@ -135,7 +135,7 @@ class App extends React.Component {
           id="variants"
           label="Variants"
           value={this.state.variants}
-          onChange={this.handleChange('variants')}
+          onChange={this.handleChange("variants")}
           type="number"
           className={classes.numberInput}
           margin="normal"
@@ -145,7 +145,7 @@ class App extends React.Component {
           id="maxInterval"
           label="Max Interval Lenght"
           value={this.state.maxInterval}
-          onChange={this.handleChange('maxInterval')}
+          onChange={this.handleChange("maxInterval")}
           type="number"
           className={classes.maxIntervalLengthInput}
           margin="normal"
