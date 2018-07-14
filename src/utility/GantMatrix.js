@@ -49,15 +49,15 @@ export function genMachineOrderForGant(
 function insertJobInGant(gantMatrix, jobMatrix2, nextJobNumber) {
   let task = jobMatrix2[nextJobNumber].shift();
 
-  if (gantMatrix[task.machine].length === 0) {
-    gantMatrix[task.machine] = gantMatrix[task.machine].concat(
-      getArrayWithJobNumber(task.interval, nextJobNumber)
-    );
-  } else if (task.start - gantMatrix[task.machine].length > 0) {
+  if (task.start - gantMatrix[task.machine].length > 0) {
     let interval = task.start - gantMatrix[task.machine].length;
     gantMatrix[task.machine] = gantMatrix[task.machine].concat(
       getArrayWithJobNumber(interval, -1)
     );
+    gantMatrix[task.machine] = gantMatrix[task.machine].concat(
+      getArrayWithJobNumber(task.interval, nextJobNumber)
+    );
+  } else {
     gantMatrix[task.machine] = gantMatrix[task.machine].concat(
       getArrayWithJobNumber(task.interval, nextJobNumber)
     );
