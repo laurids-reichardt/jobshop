@@ -120,11 +120,13 @@ class App extends React.Component {
           prev.machines,
           prev.maxInterval
         );
+
         const jobStr = genJobStringMatrix(jobMatrix);
+
         const machineMatrix = genMachineOrder(
           jobMatrix,
-          this.state.machines,
-          this.state.jobs
+          prev.machines,
+          prev.jobs
         );
 
         return {
