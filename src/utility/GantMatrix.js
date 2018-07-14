@@ -50,12 +50,17 @@ function insertJobInGant(gantMatrix, jobMatrix2, nextJobNumber) {
   let task = jobMatrix2[nextJobNumber].shift();
 
   if (gantMatrix[task.machine].length === 0) {
-    gantMatrix[task.machine].concat(
+    gantMatrix[task.machine] = gantMatrix[task.machine].concat(
       getArrayWithJobNumber(task.interval, nextJobNumber)
     );
   } else if (task.start - gantMatrix[task.machine].length > 0) {
     let interval = task.start - gantMatrix[task.machine].length;
-    gantMatrix[task.machine].concat(getArrayWithJobNumber(interval, -1));
+    gantMatrix[task.machine] = gantMatrix[task.machine].concat(
+      getArrayWithJobNumber(interval, -1)
+    );
+    gantMatrix[task.machine] = gantMatrix[task.machine].concat(
+      getArrayWithJobNumber(task.interval, nextJobNumber)
+    );
   }
 }
 
@@ -64,6 +69,8 @@ function getArrayWithJobNumber(interval, jobnumber) {
   for (let index = 0; index < interval; index++) {
     array.push(jobnumber);
   }
+  console.log(array);
+  return array;
 }
 
 // function insertJobInGant(gantMatrix, jobMatrix2, nextJobNumber) {
