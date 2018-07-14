@@ -10,7 +10,6 @@ const styles = theme => ({
     // padding: theme.spacing.unit,
   },
   inner: {
-    // backgroundColor: lightGreen[600],
     width: '100%',
     height: '100%',
     display: 'flex',
@@ -19,15 +18,27 @@ const styles = theme => ({
   },
 });
 
-const Element = ({ classes, value }) => (
-  <div className={classes.root}>
-    <div
-      className={classes.inner}
-      style={{ backgroundColor: lightGreen[(value + 1) * 100] }}
-    >
-      <Typography variant="display1">{value !== -1 ? value : null}</Typography>
+const colors = [
+  'F44336',
+  'E91E63',
+  '9C27B0',
+  '673AB7',
+  '3F51B5',
+  '2196F3',
+  '009688',
+  'FF5722',
+  'CDDC39',
+];
+
+const Element = ({ classes, value }) => {
+  const color = value !== -1 ? colors[value] : '000000';
+  return (
+    <div className={classes.root}>
+      <div className={classes.inner} style={{ backgroundColor: `#${color}` }}>
+        <Typography variant="title">{value !== -1 ? value : null}</Typography>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default withStyles(styles)(Element);

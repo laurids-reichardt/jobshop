@@ -45,7 +45,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       machines: 2,
-      jobs: 2,
+      jobs: 9,
       variants: 100,
       maxInterval: 3,
       jobsStr: 'Test',
@@ -56,40 +56,33 @@ class App extends React.Component {
   }
 
   handleGenerate = () => {
-    this.setState(
-      prev => {
-        const jobMatrix = generateJobMatrix(
-          prev.jobs,
-          prev.machines,
-          prev.maxInterval
-        );
-
-        const jobStr = genJobStringMatrix(jobMatrix);
-
-        const machineMatrix = genMachineOrder(
-          jobMatrix,
-          prev.machines,
-          prev.jobs
-        );
-
-        const gantMatrix = genMachineOrderForGant(
-          machineMatrix,
-          jobMatrix,
-          this.state.machines,
-          this.state.jobs
-        );
-
-        return {
-          jobsStr: jobStr,
-          jobMatrix: jobMatrix,
-          machineMatrix: machineMatrix,
-          gantMatrix: gantMatrix,
-        };
-      },
-      () => {
-        // console.log(this.state.machineMatrix);
-      }
+    const jobMatrix = generateJobMatrix(
+      this.state.jobs,
+      this.state.machines,
+      this.state.maxInterval
     );
+
+    // const jobStr = genJobStringMatrix(jobMatrix);
+
+    const machineMatrix = genMachineOrder(
+      jobMatrix,
+      this.state.machines,
+      this.state.jobs
+    );
+
+    const gantMatrix = genMachineOrderForGant(
+      machineMatrix,
+      jobMatrix,
+      this.state.machines,
+      this.state.jobs
+    );
+
+    this.setState({
+      jobMatrix: jobMatrix,
+      // jobsStr: jobStr,
+      machineMatrix: machineMatrix,
+      gantMatrix: gantMatrix,
+    });
   };
 
   handleChange = name => event => {
