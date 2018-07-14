@@ -23,9 +23,9 @@ const Element = ({ classes, value }) => (
   <div className={classes.root}>
     <div
       className={classes.inner}
-      style={{ backgroundColor: lightGreen[value * 100] }}
+      style={{ backgroundColor: lightGreen[(value + 1) * 100] }}
     >
-      {/* <Typography variant="display1">{value}</Typography> */}
+      <Typography variant="display1">{value !== -1 ? value : null}</Typography>
     </div>
   </div>
 );

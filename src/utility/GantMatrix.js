@@ -37,11 +37,11 @@ export function genMachineOrderForGant(
       }
     }
   }
-  console.log("JobMatrix2: ");
+  console.log('JobMatrix2: ');
   console.log(jobMatrix2);
-  console.log("machineMatrix ");
+  console.log('machineMatrix ');
   console.log(machineMatrix);
-  console.log("Abgearbeitete machineMatrix2:");
+  console.log('Abgearbeitete machineMatrix2:');
   console.log(machineMatrix2);
   return gantMatrix;
 }
@@ -101,7 +101,7 @@ function searchFreeTimeSlot(gantMatrix, task, nextJobNumber) {
           index2 < index + 1;
           index++
         ) {
-          gantMatrix[task.machine][nextJobNumber];
+          gantMatrix[task.machine][index2] = nextJobNumber;
         }
       }
     }

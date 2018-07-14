@@ -10,8 +10,19 @@ import lightGreen from '@material-ui/core/colors/lightGreen';
 import lime from '@material-ui/core/colors/lime';
 
 import Element from './Element';
+import { isEqual } from './utility/UtilityFunctions';
 
-// const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+function getArrayWithJobNumber(interval, jobnumber) {
+  const array = [];
+  for (let index = 0; index < interval; index++) {
+    array.push(jobnumber);
+  }
+  return array;
+}
+
+const flatten = list =>
+  list.reduce((a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []);
+
 const numbers = [9, 8, 7, 6, 5, 4, 3, 2, 1];
 
 const styles = theme => ({
@@ -19,36 +30,62 @@ const styles = theme => ({
     // width: theme.spacing.unit * 108,
     // height: theme.spacing.unit * 36,
     display: 'grid',
-    gridTemplateColumns: 'repeat(22, 1fr)',
-    gridTemplateRows: `repeat(12, ${theme.spacing.unit * 4}px)`,
+    gridTemplateColumns: 'repeat(var(--maxInterval), 1fr)',
+    gridTemplateRows: `repeat(var(--lanes), ${theme.spacing.unit * 8}px)`,
   },
 });
 
-const Container = ({ classes, state }) => (
-  <div className={classes.root}>
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-    {numbers.map(num => <Element key={num.toString()} value={num} />)}
-  </div>
-);
+class Container extends React.Component {
+  state = {
+    lanes: 2,
+    maxInterval: 6,
+    gantMatrix: [],
+  };
+
+  componentDidUpdate(prevProps) {
+    if (!isEqual(prevProps.gantMatrix, this.props.gantMatrix)) {
+      let gantMatrix = this.props.gantMatrix;
+      const lenghtsArr = gantMatrix.map(machine => machine.length);
+      const lanes = gantMatrix.length;
+      const maxInterval = Math.max(...lenghtsArr);
+
+      gantMatrix = gantMatrix.map(machine => {
+        const diff = maxInterval - machine.length;
+        if (diff > 0) {
+          return machine.concat(getArrayWithJobNumber(diff, -1));
+        } else {
+          return machine;
+        }
+      });
+
+      this.setState(
+        {
+          lanes: lanes,
+          maxInterval: maxInterval,
+          gantMatrix: flatten(gantMatrix),
+        },
+        () => console.log(this.state.gantMatrix)
+      );
+    }
+  }
+
+  render() {
+    const { classes } = this.props;
+    let counter = 0;
+    return (
+      <div
+        className={classes.root}
+        style={{
+          '--maxInterval': this.state.maxInterval,
+          '--lanes': this.state.lanes,
+        }}
+      >
+        {this.state.gantMatrix.map(num => (
+          <Element key={counter++} value={num} />
+        ))}
+      </div>
+    );
+  }
+}
 
 export default withStyles(styles)(Container);
