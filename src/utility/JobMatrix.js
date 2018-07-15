@@ -1,4 +1,4 @@
-import { getRandomInt, shuffle } from "./UtilityFunctions.js";
+import { getRandomInt, shuffle } from './UtilityFunctions.js';
 
 export function generateJobMatrix(jobs, machines, maxIntervalLength) {
   const matrix = [];
@@ -43,7 +43,7 @@ export function genJobStringMatrix(matrix, maxIntervalLength) {
     matrix[0].length
   }   Max Interval: ${maxIntervalLength} \n`;
   matrix.forEach(job => {
-    str += "\n";
+    str += '\n';
     job.forEach(task => {
       str += `${task.machine} ${task.interval}   `;
     });
@@ -52,178 +52,157 @@ export function genJobStringMatrix(matrix, maxIntervalLength) {
 }
 
 export function gernerateJobMatrixForBeginning() {
-  const jobMatrix = [];
-
-  let job = [];
-
-  job.push({
-    machine: 2,
-    interval: 1
-  });
-  job.push({
-    machine: 0,
-    interval: 3
-  });
-
-  job.push({
-    machine: 1,
-    interval: 6
-  });
-
-  job.push({
-    machine: 3,
-    interval: 7
-  });
-
-  job.push({
-    machine: 5,
-    interval: 3
-  });
-
-  job.push({
-    machine: 4,
-    interval: 6
-  });
-
-  job.push({
-    machine: 1,
-    interval: 8
-  });
-
-  job.push({
-    machine: 2,
-    interval: 5
-  });
-
-  job.push({
-    machine: 4,
-    interval: 10
-  });
-
-  job.push({
-    machine: 5,
-    interval: 10
-  });
-
-  job.push({
-    machine: 0,
-    interval: 10
-  });
-
-  job.push({
-    machine: 3,
-    interval: 4
-  });
-
-  job.push({
-    machine: 2,
-    interval: 5
-  });
-
-  job.push({
-    machine: 3,
-    interval: 4
-  });
-
-  job.push({
-    machine: 5,
-    interval: 8
-  });
-
-  job.push({
-    machine: 0,
-    interval: 9
-  });
-
-  job.push({
-    machine: 1,
-    interval: 1
-  });
-
-  job.push({
-    machine: 4,
-    interval: 7
-  });
-
-  job.push({
-    machine: 1,
-    interval: 5
-  });
-
-  job.push({
-    machine: 0,
-    interval: 5
-  });
-
-  job.push({
-    machine: 2,
-    interval: 5
-  });
-
-  job.push({
-    machine: 3,
-    interval: 3
-  });
-
-  job.push({
-    machine: 4,
-    interval: 8
-  });
-
-  job.push({
-    machine: 5,
-    interval: 9
-  });
-
-  job.push({
-    machine: 2,
-    interval: 9
-  });
-
-  job.push({
-    machine: 1,
-    interval: 3
-  });
-
-  job.push({
-    machine: 4,
-    interval: 5
-  });
-
-  job.push({
-    machine: 5,
-    interval: 4
-  });
-  job.push({
-    machine: 0,
-    interval: 3
-  });
-  job.push({
-    machine: 3,
-    interval: 1
-  });
-  job.push({
-    machine: 1,
-    interval: 3
-  });
-  job.push({
-    machine: 3,
-    interval: 3
-  });
-  job.push({
-    machine: 5,
-    interval: 9
-  });
-  job.push({
-    machine: 0,
-    interval: 10
-  });
-  job.push({
-    machine: 4,
-    interval: 4
-  });
-  job.push({
-    machine: 2,
-    interval: 1
-  });
+  const jobMatrix = [
+    [
+      {
+        machine: 2,
+        interval: 1
+      },
+      {
+        machine: 0,
+        interval: 3
+      },
+      {
+        machine: 1,
+        interval: 6
+      },
+      {
+        machine: 3,
+        interval: 7
+      },
+      {
+        machine: 5,
+        interval: 3
+      },
+      {
+        machine: 4,
+        interval: 6
+      }
+    ][
+      ({
+        machine: 1,
+        interval: 8
+      },
+      {
+        machine: 2,
+        interval: 5
+      },
+      {
+        machine: 4,
+        interval: 10
+      },
+      {
+        machine: 5,
+        interval: 10
+      },
+      {
+        machine: 0,
+        interval: 10
+      },
+      {
+        machine: 2,
+        interval: 5
+      })
+    ][
+      ({
+        machine: 3,
+        interval: 4
+      },
+      {
+        machine: 3,
+        interval: 4
+      },
+      {
+        machine: 5,
+        interval: 8
+      },
+      {
+        machine: 0,
+        interval: 9
+      },
+      {
+        machine: 1,
+        interval: 1
+      },
+      {
+        machine: 4,
+        interval: 7
+      })
+    ][
+      ({
+        machine: 1,
+        interval: 5
+      },
+      {
+        machine: 0,
+        interval: 5
+      },
+      {
+        machine: 2,
+        interval: 5
+      },
+      {
+        machine: 3,
+        interval: 3
+      },
+      {
+        machine: 4,
+        interval: 8
+      },
+      {
+        machine: 5,
+        interval: 9
+      })
+    ][
+      ({
+        machine: 2,
+        interval: 9
+      },
+      {
+        machine: 1,
+        interval: 3
+      },
+      {
+        machine: 4,
+        interval: 5
+      },
+      {
+        machine: 5,
+        interval: 4
+      },
+      {
+        machine: 0,
+        interval: 3
+      },
+      {
+        machine: 3,
+        interval: 1
+      })
+    ][
+      ({
+        machine: 1,
+        interval: 3
+      },
+      {
+        machine: 3,
+        interval: 3
+      },
+      {
+        machine: 5,
+        interval: 9
+      },
+      {
+        machine: 0,
+        interval: 10
+      },
+      {
+        machine: 4,
+        interval: 4
+      },
+      {
+        machine: 2,
+        interval: 1
+      })
+    ]
+  ];
 }
