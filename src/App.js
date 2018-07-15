@@ -48,7 +48,7 @@ class App extends React.Component {
       jobs: 4,
       variants: 100,
       maxInterval: 5,
-      jobsStr: 'Test',
+      jobsStr: '\n\n\n\n\n',
       jobMatrix: [
         [
           {
@@ -137,32 +137,35 @@ class App extends React.Component {
   }
 
   handleGenerate = () => {
-    // const jobMatrix = generateJobMatrix(
-    //   this.state.jobs,
-    //   this.state.machines,
-    //   this.state.maxInterval
-    // );
+    const jobMatrix = generateJobMatrix(
+      this.state.jobs,
+      this.state.machines,
+      this.state.maxInterval
+    );
 
-    const jobMatrix = this.state.jobMatrix;
+    const jobStr = genJobStringMatrix(jobMatrix);
 
-    // const jobStr = genJobStringMatrix(jobMatrix);
+    this.setState({
+      jobMatrix: jobMatrix,
+      jobsStr: jobStr,
+    });
+  };
 
+  handleRun = () => {
     const machineMatrix = genMachineOrder(
-      jobMatrix,
+      this.state.jobMatrix,
       this.state.machines,
       this.state.jobs
     );
 
     const gantMatrix = genMachineOrderForGant(
       machineMatrix,
-      jobMatrix,
+      this.state.jobMatrix,
       this.state.machines,
       this.state.jobs
     );
 
     this.setState({
-      jobMatrix: jobMatrix,
-      // jobsStr: jobStr,
       machineMatrix: machineMatrix,
       gantMatrix: gantMatrix,
     });
@@ -174,6 +177,7 @@ class App extends React.Component {
     value = event.target.value < 1 ? 1 : value;
     this.setState({
       [name]: value,
+      // [name]: event.target.value,
     });
   };
 
@@ -194,11 +198,22 @@ class App extends React.Component {
           Generate
         </Button>
 
+        <Button
+          onClick={this.handleRun}
+          className={classes.button}
+          variant="contained"
+          color="primary"
+        >
+          Run
+        </Button>
+
         <TextField
           id="machines"
           label="Machines"
-          value={this.state.machines}
-          onChange={this.handleChange('machines')}
+          defaultValue={this.state.machines}
+          onBlur={this.handleChange('machines')}
+          min="0"
+          max="100"
           type="number"
           className={classes.numberInput}
           margin="normal"
@@ -207,8 +222,8 @@ class App extends React.Component {
         <TextField
           id="jobs"
           label="Jobs"
-          value={this.state.jobs}
-          onChange={this.handleChange('jobs')}
+          defaultValue={this.state.jobs}
+          onBlur={this.handleChange('jobs')}
           type="number"
           className={classes.numberInput}
           margin="normal"
@@ -217,8 +232,8 @@ class App extends React.Component {
         <TextField
           id="variants"
           label="Variants"
-          value={this.state.variants}
-          onChange={this.handleChange('variants')}
+          defaultValue={this.state.variants}
+          onBlur={this.handleChange('variants')}
           type="number"
           className={classes.numberInput}
           margin="normal"
@@ -227,10 +242,22 @@ class App extends React.Component {
         <TextField
           id="maxInterval"
           label="Max Interval Lenght"
-          value={this.state.maxInterval}
-          onChange={this.handleChange('maxInterval')}
+          defaultValue={this.state.maxInterval}
+          onBlur={this.handleChange('maxInterval')}
           type="number"
           className={classes.maxIntervalLengthInput}
+          margin="normal"
+        />
+
+        <br />
+
+        <TextField
+          id="textarea"
+          label="Job Matrix"
+          placeholder="Placeholder"
+          multiline
+          value={this.state.jobsStr}
+          className={classes.multiline}
           margin="normal"
         />
 
@@ -239,16 +266,6 @@ class App extends React.Component {
         <Container gantMatrix={this.state.gantMatrix} />
 
         <br />
-
-        {/* <TextField
-          id="textarea"
-          label="Generated output"
-          placeholder="Placeholder"
-          multiline
-          value={this.state.jobsStr}
-          className={classes.multiline}
-          margin="normal"
-        /> */}
 
         <div className={classes.jsonViewContainer}>
           <ReactJson
