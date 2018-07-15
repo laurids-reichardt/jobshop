@@ -52,7 +52,7 @@ const styles = theme => ({
   multiline: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 320,
+    width: 480,
   },
   jsonViewContainer: {
     width: '100%',
@@ -157,11 +157,11 @@ class App extends React.Component {
 
   handleChange = name => event => {
     // make sure input value is between 1 and 9
-    let value = event.target.value > 9 ? 9 : event.target.value;
-    value = event.target.value < 1 ? 1 : value;
+    // let value = event.target.value > 9 ? 9 : event.target.value;
+    // value = event.target.value < 1 ? 1 : value;
     this.setState({
-      [name]: value,
-      // [name]: event.target.value,
+      // [name]: value,
+      [name]: event.target.value,
     });
   };
 
@@ -197,8 +197,7 @@ class App extends React.Component {
           label="Machines"
           defaultValue={this.state.machines}
           onBlur={this.handleChange('machines')}
-          min="0"
-          max="100"
+          inputProps={{ min: 1, max: 12 }}
           type="number"
           className={classes.numberInput}
           margin="normal"
@@ -209,6 +208,7 @@ class App extends React.Component {
           label="Jobs"
           defaultValue={this.state.jobs}
           onBlur={this.handleChange('jobs')}
+          inputProps={{ min: 1, max: 9 }}
           type="number"
           className={classes.numberInput}
           margin="normal"
@@ -219,6 +219,7 @@ class App extends React.Component {
           label="Variants"
           defaultValue={this.state.variants}
           onBlur={this.handleChange('variants')}
+          inputProps={{ min: 10, max: 9999 }}
           type="number"
           className={classes.numberInput}
           margin="normal"
@@ -226,9 +227,10 @@ class App extends React.Component {
 
         <TextField
           id="maxInterval"
-          label="Max Interval Lenght"
+          label="Max Interval Length"
           defaultValue={this.state.maxInterval}
           onBlur={this.handleChange('maxInterval')}
+          inputProps={{ min: 1, max: 99 }}
           type="number"
           className={classes.maxIntervalLengthInput}
           margin="normal"
