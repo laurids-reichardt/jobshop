@@ -10,6 +10,26 @@ import Container from './Container';
 import { generateJobMatrix, genJobStringMatrix } from './utility/JobMatrix';
 import { genMachineOrder } from './utility/MachineMatrix';
 import { genMachineOrderForGant } from './utility/GantMatrix';
+import { getArrayWithJobNumber } from './utility/UtilityFunctions';
+
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}
+
+function makeMatrixCertainLength(matrix, minLength) {
+  return matrix.map(machine => {
+    const diff = minLength - machine.length;
+    if (diff > 0) {
+      return machine.concat(getArrayWithJobNumber(diff, -1));
+    } else {
+      return machine;
+    }
+  });
+}
 
 const styles = theme => ({
   App: {
@@ -75,8 +95,10 @@ class App extends React.Component {
   };
 
   handleRun = () => {
-    let best = 10000;
-    let counter = 0;
+    let bestSolutionLength = 10000;
+    let longestSolutionLength = 0;
+    const solutionsArray = [];
+
     for (let index = 0; index < this.state.variants; index++) {
       const machineMatrix = genMachineOrder(
         this.state.jobMatrix,
@@ -93,19 +115,37 @@ class App extends React.Component {
 
       const solutionLength = gantMatrix.length > 0 ? gantMatrix[0].length : 0;
 
-      if (solutionLength < best) {
-        best = solutionLength;
-        counter++;
-        console.log(best);
+      if (solutionLength < bestSolutionLength) {
+        longestSolutionLength =
+          longestSolutionLength < solutionLength
+            ? solutionLength
+            : longestSolutionLength;
 
-        this.setState({
-          machineMatrix: machineMatrix,
-          gantMatrix: gantMatrix,
+        bestSolutionLength = solutionLength;
+
+        solutionsArray.push({
+          gantMatrix: makeMatrixCertainLength(
+            gantMatrix,
+            longestSolutionLength
+          ),
           solutionLength: solutionLength,
+          longestSolutionLength: longestSolutionLength,
         });
+        console.log(bestSolutionLength);
       }
     }
-    console.log('counter: ' + counter);
+
+    asyncForEach(solutionsArray, async element => {
+      await delay(100);
+
+      this.setState(
+        {
+          gantMatrix: element.gantMatrix,
+          solutionLength: element.longestSolutionLength,
+        },
+        console.log('setState: ' + element.solutionLength)
+      );
+    });
   };
 
   handleChange = name => event => {

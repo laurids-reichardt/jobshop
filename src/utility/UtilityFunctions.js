@@ -13,6 +13,14 @@ export function shuffle(a) {
   return a;
 }
 
+export function getArrayWithJobNumber(interval, jobnumber) {
+  const array = [];
+  for (let index = 0; index < interval; index++) {
+    array.push(jobnumber);
+  }
+  return array;
+}
+
 export const isEqual = function(value, other) {
   // Get the value type
   var type = Object.prototype.toString.call(value);
