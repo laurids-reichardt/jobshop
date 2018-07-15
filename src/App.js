@@ -32,7 +32,7 @@ const styles = theme => ({
   multiline: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 400,
+    width: 320,
   },
   jsonViewContainer: {
     width: '100%',
@@ -44,10 +44,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      machines: 3,
-      jobs: 4,
-      variants: 100,
-      maxInterval: 5,
+      machines: 9,
+      jobs: 9,
+      variants: 1000,
+      maxInterval: 8,
       jobsStr: '\n\n\n\n\n',
       jobMatrix: [],
       machineMatrix: [],
@@ -75,26 +75,37 @@ class App extends React.Component {
   };
 
   handleRun = () => {
-    const machineMatrix = genMachineOrder(
-      this.state.jobMatrix,
-      this.state.machines,
-      this.state.jobs
-    );
+    let best = 10000;
+    let counter = 0;
+    for (let index = 0; index < this.state.variants; index++) {
+      const machineMatrix = genMachineOrder(
+        this.state.jobMatrix,
+        this.state.machines,
+        this.state.jobs
+      );
 
-    const gantMatrix = genMachineOrderForGant(
-      machineMatrix,
-      this.state.jobMatrix,
-      this.state.machines,
-      this.state.jobs
-    );
+      const gantMatrix = genMachineOrderForGant(
+        machineMatrix,
+        this.state.jobMatrix,
+        this.state.machines,
+        this.state.jobs
+      );
 
-    const solutionLength = gantMatrix.length > 0 ? gantMatrix[0].length : 0;
+      const solutionLength = gantMatrix.length > 0 ? gantMatrix[0].length : 0;
 
-    this.setState({
-      machineMatrix: machineMatrix,
-      gantMatrix: gantMatrix,
-      solutionLength: solutionLength,
-    });
+      if (solutionLength < best) {
+        best = solutionLength;
+        counter++;
+        console.log(best);
+
+        this.setState({
+          machineMatrix: machineMatrix,
+          gantMatrix: gantMatrix,
+          solutionLength: solutionLength,
+        });
+      }
+    }
+    console.log('counter: ' + counter);
   };
 
   handleChange = name => event => {

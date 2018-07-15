@@ -34,7 +34,7 @@ const Element = ({ classes, value }) => {
   return (
     <div className={classes.root}>
       <div className={classes.inner} style={{ backgroundColor: `#${color}` }}>
-        <Typography variant="title">{value !== -1 ? value : null}</Typography>
+        <Typography variant="body1">{value !== -1 ? value : null}</Typography>
       </div>
     </div>
   );

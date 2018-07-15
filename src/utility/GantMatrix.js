@@ -40,7 +40,7 @@ export function genMachineOrderForGant(
   gantMatrix = makeMatrixArraysSameLength(gantMatrix);
 
   // get total length of solution
-  console.log("Total runtime: " + gantMatrix[0].length);
+  // console.log("Total runtime: " + gantMatrix[0].length);
 
   return gantMatrix;
 }

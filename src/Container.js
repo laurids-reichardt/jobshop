@@ -17,7 +17,7 @@ const styles = theme => ({
     // height: theme.spacing.unit * 36,
     display: 'grid',
     gridTemplateColumns: 'repeat(var(--maxInterval), 1fr)',
-    gridTemplateRows: `repeat(var(--lanes), ${theme.spacing.unit * 5}px)`,
+    gridTemplateRows: `repeat(var(--lanes), ${theme.spacing.unit * 4}px)`,
   },
 });
 

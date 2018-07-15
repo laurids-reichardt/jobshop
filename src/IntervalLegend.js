@@ -13,7 +13,7 @@ const intervalArr = length => {
 const styles = theme => ({
   intervalLegend: {
     display: 'grid',
-    gridTemplateRows: `${theme.spacing.unit * 8}px`,
+    gridTemplateRows: `${theme.spacing.unit * 4}px`,
     gridTemplateColumns: 'repeat(var(--maxInterval), 1fr)',
   },
   inner: {
@@ -36,7 +36,7 @@ const Interval = props => {
     >
       {intervalArr(props.solutionLength).map(num => (
         <div className={classes.inner}>
-          <Typography variant="subheading" key={num}>
+          <Typography variant="caption" key={num}>
             {num}
           </Typography>
         </div>
