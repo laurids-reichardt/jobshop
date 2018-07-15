@@ -7,10 +7,10 @@ import ReactJson from "react-json-view";
 
 import Container from "./Container";
 
-import { generateJobMatrix, genJobStringMatrix } from './utility/JobMatrix';
-import { genMachineOrder } from './utility/MachineMatrix';
-import { genMachineOrderForGant } from './utility/GantMatrix';
-import { getArrayWithJobNumber } from './utility/UtilityFunctions';
+import { generateJobMatrix, genJobStringMatrix } from "./utility/JobMatrix";
+import { genMachineOrder } from "./utility/MachineMatrix";
+import { genMachineOrderForGant } from "./utility/GantMatrix";
+import { getArrayWithJobNumber } from "./utility/UtilityFunctions";
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -52,7 +52,7 @@ const styles = theme => ({
   multiline: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 320,
+    width: 320
   },
   jsonViewContainer: {
     width: "100%",
@@ -68,12 +68,12 @@ class App extends React.Component {
       jobs: 9,
       variants: 1000,
       maxInterval: 6,
-      jobsStr: '\n\n\n',
+      jobsStr: "\n\n\n",
       jobMatrix: [],
       machineMatrix: [],
       gantMatrix: [],
       solutionLength: 0,
-      runDisable: false,
+      runDisable: false
     };
   }
 
@@ -89,7 +89,7 @@ class App extends React.Component {
     this.setState(
       {
         jobMatrix: jobMatrix,
-        jobsStr: jobStr,
+        jobsStr: jobStr
       },
       () => setTimeout(() => this.handleRun(), 200)
     );
@@ -132,7 +132,7 @@ class App extends React.Component {
             longestSolutionLength
           ),
           solutionLength: solutionLength,
-          longestSolutionLength: longestSolutionLength,
+          longestSolutionLength: longestSolutionLength
         });
         // console.log(bestSolutionLength);
       }
@@ -146,7 +146,7 @@ class App extends React.Component {
           {
             machineMatrix: element.machineMatrix,
             gantMatrix: element.gantMatrix,
-            solutionLength: element.longestSolutionLength,
+            solutionLength: element.longestSolutionLength
           }
           // console.log('setState: ' + element.solutionLength)
         );
