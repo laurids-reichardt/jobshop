@@ -54,6 +54,7 @@ export function gernerateJobMatrixForBeginning() {
       {
         machine: 2,
         interval: 1,
+        start: 0,
       },
       {
         machine: 0,
@@ -80,6 +81,7 @@ export function gernerateJobMatrixForBeginning() {
       {
         machine: 1,
         interval: 8,
+        start: 0,
       },
       {
         machine: 2,
@@ -106,6 +108,7 @@ export function gernerateJobMatrixForBeginning() {
       {
         machine: 3,
         interval: 4,
+        start: 0,
       },
       {
         machine: 3,
@@ -132,6 +135,7 @@ export function gernerateJobMatrixForBeginning() {
       {
         machine: 1,
         interval: 5,
+        start: 0,
       },
       {
         machine: 0,
@@ -158,6 +162,7 @@ export function gernerateJobMatrixForBeginning() {
       {
         machine: 2,
         interval: 9,
+        start: 0,
       },
       {
         machine: 1,
@@ -184,6 +189,7 @@ export function gernerateJobMatrixForBeginning() {
       {
         machine: 1,
         interval: 3,
+        start: 0,
       },
       {
         machine: 3,
