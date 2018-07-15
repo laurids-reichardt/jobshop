@@ -77,7 +77,7 @@ class App extends React.Component {
       machines: 6,
       jobs: 6,
       variants: 1000,
-      maxInterval: 10,
+      maxInterval: 6,
       jobsStr: '\n\n\n',
       jobMatrix: [],
       machineMatrix: [],
@@ -196,10 +196,9 @@ class App extends React.Component {
           className={classes.infoText}
           gutterBottom
         >
-          This web application was designed and implemented by Laurids
-          Reichardt, Stefan Haouchet and Timo Klinz as a class assignment by
-          Prof. Dr.-Ing. Jörg Courant at HTW Berlin. It visualizes a simulation
-          of the
+          This web application was designed and implemented by Timo Klinz,
+          Stefan Haouchet and Laurids Reichardt as a class assignment by Prof.
+          Dr.-Ing. Jörg Courant at HTW Berlin. It visualizes a simulation of the
           <a
             href="https://en.wikipedia.org/wiki/Job_shop_scheduling"
             className={classes.link}
