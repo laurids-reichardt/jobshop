@@ -1,6 +1,6 @@
-import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
 const intervalArr = length => {
   let arr = [];
@@ -17,12 +17,12 @@ const styles = theme => ({
     gridTemplateColumns: 'repeat(var(--maxInterval), 1fr)',
   },
   inner: {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  }
 });
 
 const Interval = props => {
@@ -31,7 +31,7 @@ const Interval = props => {
     <div
       className={classes.intervalLegend}
       style={{
-        '--maxInterval': props.solutionLength,
+        "--maxInterval": props.solutionLength
       }}
     >
       {intervalArr(props.solutionLength).map(num => (
