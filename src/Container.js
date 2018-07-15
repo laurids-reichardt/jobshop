@@ -43,7 +43,6 @@ class Container extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     const { classes } = this.props;
     let counter = 0;
     return (
