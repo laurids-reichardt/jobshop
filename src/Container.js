@@ -1,16 +1,16 @@
-import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
-import lightBlue from '@material-ui/core/colors/lightBlue';
-import cyan from '@material-ui/core/colors/cyan';
-import teal from '@material-ui/core/colors/teal';
-import green from '@material-ui/core/colors/green';
-import lightGreen from '@material-ui/core/colors/lightGreen';
-import lime from '@material-ui/core/colors/lime';
+import lightBlue from "@material-ui/core/colors/lightBlue";
+import cyan from "@material-ui/core/colors/cyan";
+import teal from "@material-ui/core/colors/teal";
+import green from "@material-ui/core/colors/green";
+import lightGreen from "@material-ui/core/colors/lightGreen";
+import lime from "@material-ui/core/colors/lime";
 
-import Element from './Element';
-import { isEqual } from './utility/UtilityFunctions';
+import Element from "./Element";
+import { isEqual } from "./utility/UtilityFunctions";
 
 function getArrayWithJobNumber(interval, jobnumber) {
   const array = [];
@@ -29,17 +29,17 @@ const styles = theme => ({
   root: {
     // width: theme.spacing.unit * 108,
     // height: theme.spacing.unit * 36,
-    display: 'grid',
-    gridTemplateColumns: 'repeat(var(--maxInterval), 1fr)',
-    gridTemplateRows: `repeat(var(--lanes), ${theme.spacing.unit * 8}px)`,
-  },
+    display: "grid",
+    gridTemplateColumns: "repeat(var(--maxInterval), 1fr)",
+    gridTemplateRows: `repeat(var(--lanes), ${theme.spacing.unit * 8}px)`
+  }
 });
 
 class Container extends React.Component {
   state = {
     lanes: 2,
     maxInterval: 6,
-    gantMatrix: [],
+    gantMatrix: []
   };
 
   componentDidUpdate(prevProps) {
@@ -62,9 +62,9 @@ class Container extends React.Component {
         {
           lanes: lanes,
           maxInterval: maxInterval,
-          gantMatrix: flatten(gantMatrix),
-        },
-        () => console.log(this.state.gantMatrix)
+          gantMatrix: flatten(gantMatrix)
+        }
+        // () => console.log(this.state.gantMatrix)
       );
     }
   }
@@ -76,8 +76,8 @@ class Container extends React.Component {
       <div
         className={classes.root}
         style={{
-          '--maxInterval': this.state.maxInterval,
-          '--lanes': this.state.lanes,
+          "--maxInterval": this.state.maxInterval,
+          "--lanes": this.state.lanes
         }}
       >
         {this.state.gantMatrix.map(num => (

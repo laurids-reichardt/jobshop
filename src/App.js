@@ -81,7 +81,7 @@ class App extends React.Component {
       jobMatrix: jobMatrix,
       // jobsStr: jobStr,
       machineMatrix: machineMatrix,
-      gantMatrix: gantMatrix,
+      gantMatrix: gantMatrix
     });
   };
 

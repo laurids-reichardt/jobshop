@@ -31,18 +31,17 @@ export function genMachineOrderForGant(
         if (machineMatrix2[machineIndex][0].index === wholeMatrix) {
           let nextJobNumber = machineMatrix2[machineIndex][0].job;
           machineMatrix2[machineIndex].shift();
-          console.log(nextJobNumber);
           insertJobInGant(gantMatrix, jobMatrix2, nextJobNumber);
         }
       }
     }
   }
+  console.log(gantDiagramValues(gantMatrix, machinesAmount));
   return gantMatrix;
 }
 
 function insertJobInGant(gantMatrix, jobMatrix2, nextJobNumber) {
   let task = jobMatrix2[nextJobNumber].shift();
-
   if (task.start > gantMatrix[task.machine].length) {
     let interval = task.start - gantMatrix[task.machine].length;
     gantMatrix[task.machine] = gantMatrix[task.machine].concat(
@@ -51,30 +50,26 @@ function insertJobInGant(gantMatrix, jobMatrix2, nextJobNumber) {
     gantMatrix[task.machine] = gantMatrix[task.machine].concat(
       getArrayWithJobNumber(task.interval, nextJobNumber)
     );
+    if (jobMatrix2[nextJobNumber][0] !== undefined) {
+      jobMatrix2[nextJobNumber][0].start = gantMatrix[task.machine].length;
+    }
   } else {
-    searchFreeTimeSlot(gantMatrix, task, nextJobNumber);
-    // gantMatrix[task.machine] = gantMatrix[task.machine].concat(
-    //   getArrayWithJobNumber(task.interval, nextJobNumber)
-    // );
+    searchFreeTimeSlot(gantMatrix, task, nextJobNumber, jobMatrix2);
   }
   if (jobMatrix2[nextJobNumber][0] !== undefined) {
-    jobMatrix2[nextJobNumber][0].start = gantMatrix[task.machine].length;
   }
 }
-// }
 
 function getArrayWithJobNumber(interval, jobnumber) {
   const array = [];
   for (let index = 0; index < interval; index++) {
     array.push(jobnumber);
   }
-  console.log(array);
   return array;
 }
 
-function searchFreeTimeSlot(gantMatrix, task, nextJobNumber) {
+function searchFreeTimeSlot(gantMatrix, task, nextJobNumber, jobMatrix2) {
   let taskStartTime = task.start;
-  let gantMatrixMachineLength = gantMatrix[task.machine].length;
   let bool = false;
   let amountFreeTimeSlot = 0;
 
@@ -84,40 +79,32 @@ function searchFreeTimeSlot(gantMatrix, task, nextJobNumber) {
       gantMatrix[task.machine][taskStartTime] === undefined
     ) {
       amountFreeTimeSlot = amountFreeTimeSlot + 1;
-    }
-    if (amountFreeTimeSlot === task.interval) {
-      bool = true;
-      for (
-        let index = taskStartTime + 1 - task.interval;
-        index < taskStartTime + 1;
-        index++
-      ) {
-        gantMatrix[task.machine][index] = nextJobNumber;
+      if (amountFreeTimeSlot === task.interval) {
+        bool = true;
+        for (
+          let index = taskStartTime + 1 - task.interval;
+          index < taskStartTime + 1;
+          index++
+        ) {
+          gantMatrix[task.machine][index] = nextJobNumber;
+        }
       }
+    } else {
+      amountFreeTimeSlot = 0;
     }
-
     taskStartTime = taskStartTime + 1;
+    if (jobMatrix2[nextJobNumber][0] !== undefined) {
+      jobMatrix2[nextJobNumber][0].start = taskStartTime;
+    }
   } while (bool === false);
+}
 
-  // for (
-  //   let index = taskStartTime + 1;
-  //   index < gantMatrixMachineLength + 10;
-  //   index++
-  // ) {
-
-  //   if (
-  //     (gantMatrix[task.machine][index] === -1 ||
-  //       gantMatrix[task.machine][index] === undefined) &&
-  //     amountFreeTimeSlot !== -1
-  //   ) {
-  //     amountFreeTimeSlot = amountFreeTimeSlot + 1;
-  //     console.log("amount free TimeSlot" + amountFreeTimeSlot);
-  //     if (amountFreeTimeSlot === task.interval) {
-  //       amountFreeTimeSlot = -1;
-  //       for (let index2 = index - task.interval; index2 < index; index++) {
-  //         gantMatrix[task.machine][index2] = nextJobNumber;
-  //       }
-  //     }
-  //   }
-  // }
+function gantDiagramValues(gantMatrix, machinesAmount) {
+  let totalRuntime = 0;
+  for (let index = 0; index < machinesAmount; index++) {
+    if (gantMatrix[index].length > totalRuntime) {
+      totalRuntime = gantMatrix[index].length;
+    }
+  }
+  return totalRuntime;
 }
