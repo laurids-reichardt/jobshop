@@ -1,11 +1,11 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import { withStyles } from "@material-ui/core/styles";
-import ReactJson from "react-json-view";
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
+import ReactJson from 'react-json-view';
 
-import Container from "./Container";
+import Container from './Container';
 
 import { generateJobMatrix, genJobStringMatrix } from './utility/JobMatrix';
 import { genMachineOrder } from './utility/MachineMatrix';
@@ -33,21 +33,21 @@ function makeMatrixCertainLength(matrix, minLength) {
 
 const styles = theme => ({
   App: {
-    padding: theme.spacing.unit * 4
+    padding: theme.spacing.unit * 4,
   },
   button: {
     margin: theme.spacing.unit * 2,
-    marginLeft: 0
+    marginLeft: 0,
   },
   numberInput: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 50
+    width: 50,
   },
   maxIntervalLengthInput: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 150
+    width: 150,
   },
   multiline: {
     marginLeft: theme.spacing.unit,
@@ -55,9 +55,9 @@ const styles = theme => ({
     width: 480,
   },
   jsonViewContainer: {
-    width: "100%",
-    display: "flex"
-  }
+    width: '100%',
+    display: 'flex',
+  },
 });
 
 class App extends React.Component {

@@ -50,3 +50,180 @@ export function genJobStringMatrix(matrix, maxIntervalLength) {
   });
   return str;
 }
+
+export function gernerateJobMatrixForBeginning() {
+  const jobMatrix = [];
+
+  let job = [];
+
+  job.push({
+    machine: 2,
+    interval: 1,
+  });
+  job.push({
+    machine: 0,
+    interval: 3,
+  });
+
+  job.push({
+    machine: 1,
+    interval: 6,
+  });
+
+  job.push({
+    machine: 3,
+    interval: 7,
+  });
+
+  job.push({
+    machine: 5,
+    interval: 3,
+  });
+
+  job.push({
+    machine: 4,
+    interval: 6,
+  });
+
+  job.push({
+    machine: 1,
+    interval: 8,
+  });
+
+  job.push({
+    machine: 2,
+    interval: 5,
+  });
+
+  job.push({
+    machine: 4,
+    interval: 10,
+  });
+
+  job.push({
+    machine: 5,
+    interval: 10,
+  });
+
+  job.push({
+    machine: 0,
+    interval: 10,
+  });
+
+  job.push({
+    machine: 3,
+    interval: 4,
+  });
+
+  job.push({
+    machine: 2,
+    interval: 5,
+  });
+
+  job.push({
+    machine: 3,
+    interval: 4,
+  });
+
+  job.push({
+    machine: 5,
+    interval: 8,
+  });
+
+  job.push({
+    machine: 0,
+    interval: 9,
+  });
+
+  job.push({
+    machine: 1,
+    interval: 1,
+  });
+
+  job.push({
+    machine: 4,
+    interval: 7,
+  });
+
+  job.push({
+    machine: 1,
+    interval: 5,
+  });
+
+  job.push({
+    machine: 0,
+    interval: 5,
+  });
+
+  job.push({
+    machine: 2,
+    interval: 5,
+  });
+
+  job.push({
+    machine: 3,
+    interval: 3,
+  });
+
+  job.push({
+    machine: 4,
+    interval: 8,
+  });
+
+  job.push({
+    machine: 5,
+    interval: 9,
+  });
+
+  job.push({
+    machine: 2,
+    interval: 9,
+  });
+
+  job.push({
+    machine: 1,
+    interval: 3,
+  });
+
+  job.push({
+    machine: 4,
+    interval: 5,
+  });
+
+  job.push({
+    machine: 5,
+    interval: 4,
+  });
+  job.push({
+    machine: 0,
+    interval: 3,
+  });
+  job.push({
+    machine: 3,
+    interval: 1,
+  });
+  job.push({
+    machine: 1,
+    interval: 3,
+  });
+  job.push({
+    machine: 3,
+    interval: 3,
+  });
+  job.push({
+    machine: 5,
+    interval: 9,
+  });
+  job.push({
+    machine: 0,
+    interval: 10,
+  });
+  job.push({
+    machine: 4,
+    interval: 4,
+  });
+  job.push({
+    machine: 2,
+    interval: 1,
+  });
+}
