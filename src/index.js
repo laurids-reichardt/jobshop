@@ -11,7 +11,7 @@ const types = {
   dark: {
     type: 'dark',
     background: {
-      default: grey[900],
+      default: grey[800],
     },
   },
   darkBlue: {

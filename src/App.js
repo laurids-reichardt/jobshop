@@ -42,21 +42,27 @@ const styles = theme => ({
   numberInput: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 50,
+    width: 60,
   },
   maxIntervalLengthInput: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 150,
+    width: 160,
   },
   multiline: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 480,
+    width: 580,
   },
   jsonViewContainer: {
     width: '100%',
     display: 'flex',
+  },
+  infoText: {
+    maxWidth: '800px',
+  },
+  link: {
+    color: '#2196f3',
   },
 });
 
@@ -173,6 +179,46 @@ class App extends React.Component {
           Job Shop Problem
         </Typography>
 
+        <Typography
+          variant="body1"
+          component="div"
+          className={classes.infoText}
+          gutterBottom
+        >
+          This web application was designed and implemented by Laurids
+          Reichardt, Stefan Haouchet and Timo Klinz as a class assignment by
+          Prof. Dr.-Ing. Jörg Courant at HTW Berlin. It visualizes a simulation
+          of the
+          <a
+            href="https://en.wikipedia.org/wiki/Job_shop_scheduling"
+            className={classes.link}
+          >
+            {' '}
+            job shop problem
+          </a>
+          . There are several definitions for the job shop problem. We simulated
+          the problem with the following conditions:
+          <ol>
+            <li>
+              A task of a job can only be done when the previous task is done.
+            </li>
+            <li>One machine can only process one task.</li>
+          </ol>
+          As default the benchmark matrix
+          <a
+            href="https://github.com/tamy0612/JSPLIB/blob/master/instances/ft06"
+            className={classes.link}
+          >
+            {' '}
+            Fisher and Thompson 06{' '}
+          </a>
+          is loaded. After clicking on "RUN" our algorithm shows the best gant
+          diagram for the benchmark matrix after a 1000 random runs. To generate
+          another random job matrix click on "GENERATE". You can adjust the
+          generated job matrix by editing the setting values "Machines", "Jobs",
+          "Variants" and "Max Interval Length".
+        </Typography>
+
         <Button
           onClick={this.handleGenerate}
           className={classes.button}
@@ -265,7 +311,7 @@ class App extends React.Component {
           <ReactJson
             name="jobMatrix"
             src={this.state.jobMatrix}
-            theme="monokai"
+            theme="flat"
             enableClipboard={false}
             displayObjectSize={false}
             displayDataTypes={false}
@@ -275,7 +321,7 @@ class App extends React.Component {
           <ReactJson
             name="machineMatrix"
             src={this.state.machineMatrix}
-            theme="monokai"
+            theme="flat"
             enableClipboard={false}
             displayObjectSize={false}
             displayDataTypes={false}
@@ -285,7 +331,7 @@ class App extends React.Component {
           <ReactJson
             name="gantMatrix"
             src={this.state.gantMatrix}
-            theme="monokai"
+            theme="flat"
             enableClipboard={false}
             displayObjectSize={false}
             displayDataTypes={false}
