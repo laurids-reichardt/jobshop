@@ -1,16 +1,16 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import { withStyles } from "@material-ui/core/styles";
-import ReactJson from "react-json-view";
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
+import ReactJson from 'react-json-view';
 
-import Container from "./Container";
+import Container from './Container';
 
-import { generateJobMatrix, genJobStringMatrix } from "./utility/JobMatrix";
-import { genMachineOrder } from "./utility/MachineMatrix";
-import { genMachineOrderForGant } from "./utility/GantMatrix";
-import { getArrayWithJobNumber } from "./utility/UtilityFunctions";
+import { generateJobMatrix, genJobStringMatrix } from './utility/JobMatrix';
+import { genMachineOrder } from './utility/MachineMatrix';
+import { genMachineOrderForGant } from './utility/GantMatrix';
+import { getArrayWithJobNumber } from './utility/UtilityFunctions';
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -33,31 +33,31 @@ function makeMatrixCertainLength(matrix, minLength) {
 
 const styles = theme => ({
   App: {
-    padding: theme.spacing.unit * 4
+    padding: theme.spacing.unit * 4,
   },
   button: {
     margin: theme.spacing.unit * 2,
-    marginLeft: 0
+    marginLeft: 0,
   },
   numberInput: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 50
+    width: 50,
   },
   maxIntervalLengthInput: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 150
+    width: 150,
   },
   multiline: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 320
+    width: 320,
   },
   jsonViewContainer: {
-    width: "100%",
-    display: "flex"
-  }
+    width: '100%',
+    display: 'flex',
+  },
 });
 
 class App extends React.Component {
@@ -68,12 +68,12 @@ class App extends React.Component {
       jobs: 9,
       variants: 1000,
       maxInterval: 6,
-      jobsStr: "\n\n\n",
+      jobsStr: '\n\n\n',
       jobMatrix: [],
       machineMatrix: [],
       gantMatrix: [],
       solutionLength: 0,
-      runDisable: false
+      runDisable: false,
     };
   }
 
@@ -89,7 +89,7 @@ class App extends React.Component {
     this.setState(
       {
         jobMatrix: jobMatrix,
-        jobsStr: jobStr
+        jobsStr: jobStr,
       },
       () => setTimeout(() => this.handleRun(), 200)
     );
@@ -132,7 +132,7 @@ class App extends React.Component {
             longestSolutionLength
           ),
           solutionLength: solutionLength,
-          longestSolutionLength: longestSolutionLength
+          longestSolutionLength: longestSolutionLength,
         });
         // console.log(bestSolutionLength);
       }
@@ -146,7 +146,7 @@ class App extends React.Component {
           {
             machineMatrix: element.machineMatrix,
             gantMatrix: element.gantMatrix,
-            solutionLength: element.longestSolutionLength
+            solutionLength: element.longestSolutionLength,
           }
           // console.log('setState: ' + element.solutionLength)
         );
@@ -160,7 +160,7 @@ class App extends React.Component {
     let value = event.target.value > 9 ? 9 : event.target.value;
     value = event.target.value < 1 ? 1 : value;
     this.setState({
-      [name]: value
+      [name]: value,
       // [name]: event.target.value,
     });
   };
@@ -196,7 +196,7 @@ class App extends React.Component {
           id="machines"
           label="Machines"
           defaultValue={this.state.machines}
-          onBlur={this.handleChange("machines")}
+          onBlur={this.handleChange('machines')}
           min="0"
           max="100"
           type="number"
@@ -208,7 +208,7 @@ class App extends React.Component {
           id="jobs"
           label="Jobs"
           defaultValue={this.state.jobs}
-          onBlur={this.handleChange("jobs")}
+          onBlur={this.handleChange('jobs')}
           type="number"
           className={classes.numberInput}
           margin="normal"
@@ -218,7 +218,7 @@ class App extends React.Component {
           id="variants"
           label="Variants"
           defaultValue={this.state.variants}
-          onBlur={this.handleChange("variants")}
+          onBlur={this.handleChange('variants')}
           type="number"
           className={classes.numberInput}
           margin="normal"
@@ -228,7 +228,7 @@ class App extends React.Component {
           id="maxInterval"
           label="Max Interval Lenght"
           defaultValue={this.state.maxInterval}
-          onBlur={this.handleChange("maxInterval")}
+          onBlur={this.handleChange('maxInterval')}
           type="number"
           className={classes.maxIntervalLengthInput}
           margin="normal"

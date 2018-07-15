@@ -1,4 +1,4 @@
-import { getRandomInt, shuffle } from "./UtilityFunctions.js";
+import { getRandomInt, shuffle } from './UtilityFunctions.js';
 
 export function generateJobMatrix(jobs, machines, maxIntervalLength) {
   const matrix = [];
@@ -10,7 +10,7 @@ export function generateJobMatrix(jobs, machines, maxIntervalLength) {
     for (let j = 0; j < machines; j++) {
       job.push({
         machine: j,
-        interval: getRandomInt(1, maxIntervalLength)
+        interval: getRandomInt(1, maxIntervalLength),
       });
     }
     // shuffle machine lane order and push to matrix array
@@ -27,7 +27,7 @@ export function generateJobMatrix(jobs, machines, maxIntervalLength) {
         number: counter,
         machine: task.machine,
         interval: task.interval,
-        start: currentInterval
+        start: currentInterval,
       };
       currentInterval += task.interval;
       counter++;
@@ -43,7 +43,7 @@ export function genJobStringMatrix(matrix, maxIntervalLength) {
     matrix[0].length
   }   Max Interval: ${maxIntervalLength} \n`;
   matrix.forEach(job => {
-    str += "\n";
+    str += '\n';
     job.forEach(task => {
       str += `${task.machine} ${task.interval}   `;
     });
@@ -58,172 +58,172 @@ export function gernerateJobMatrixForBeginning() {
 
   job.push({
     machine: 2,
-    interval: 1
+    interval: 1,
   });
   job.push({
     machine: 0,
-    interval: 3
+    interval: 3,
   });
 
   job.push({
     machine: 1,
-    interval: 6
+    interval: 6,
   });
 
   job.push({
     machine: 3,
-    interval: 7
+    interval: 7,
   });
 
   job.push({
     machine: 5,
-    interval: 3
+    interval: 3,
   });
 
   job.push({
     machine: 4,
-    interval: 6
+    interval: 6,
   });
 
   job.push({
     machine: 1,
-    interval: 8
+    interval: 8,
   });
 
   job.push({
     machine: 2,
-    interval: 5
+    interval: 5,
   });
 
   job.push({
     machine: 4,
-    interval: 10
+    interval: 10,
   });
 
   job.push({
     machine: 5,
-    interval: 10
+    interval: 10,
   });
 
   job.push({
     machine: 0,
-    interval: 10
+    interval: 10,
   });
 
   job.push({
     machine: 3,
-    interval: 4
+    interval: 4,
   });
 
   job.push({
     machine: 2,
-    interval: 5
+    interval: 5,
   });
 
   job.push({
     machine: 3,
-    interval: 4
+    interval: 4,
   });
 
   job.push({
     machine: 5,
-    interval: 8
+    interval: 8,
   });
 
   job.push({
     machine: 0,
-    interval: 9
+    interval: 9,
   });
 
   job.push({
     machine: 1,
-    interval: 1
+    interval: 1,
   });
 
   job.push({
     machine: 4,
-    interval: 7
+    interval: 7,
   });
 
   job.push({
     machine: 1,
-    interval: 5
+    interval: 5,
   });
 
   job.push({
     machine: 0,
-    interval: 5
+    interval: 5,
   });
 
   job.push({
     machine: 2,
-    interval: 5
+    interval: 5,
   });
 
   job.push({
     machine: 3,
-    interval: 3
+    interval: 3,
   });
 
   job.push({
     machine: 4,
-    interval: 8
+    interval: 8,
   });
 
   job.push({
     machine: 5,
-    interval: 9
+    interval: 9,
   });
 
   job.push({
     machine: 2,
-    interval: 9
+    interval: 9,
   });
 
   job.push({
     machine: 1,
-    interval: 3
+    interval: 3,
   });
 
   job.push({
     machine: 4,
-    interval: 5
+    interval: 5,
   });
 
   job.push({
     machine: 5,
-    interval: 4
+    interval: 4,
   });
   job.push({
     machine: 0,
-    interval: 3
+    interval: 3,
   });
   job.push({
     machine: 3,
-    interval: 1
+    interval: 1,
   });
   job.push({
     machine: 1,
-    interval: 3
+    interval: 3,
   });
   job.push({
     machine: 3,
-    interval: 3
+    interval: 3,
   });
   job.push({
     machine: 5,
-    interval: 9
+    interval: 9,
   });
   job.push({
     machine: 0,
-    interval: 10
+    interval: 10,
   });
   job.push({
     machine: 4,
-    interval: 4
+    interval: 4,
   });
   job.push({
     machine: 2,
-    interval: 1
+    interval: 1,
   });
 }
