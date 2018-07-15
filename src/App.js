@@ -73,6 +73,7 @@ class App extends React.Component {
       machineMatrix: [],
       gantMatrix: [],
       solutionLength: 0,
+      runDisable: false,
     };
   }
 
@@ -89,12 +90,13 @@ class App extends React.Component {
       {
         jobMatrix: jobMatrix,
         jobsStr: jobStr,
-      }
-      // this.handleRun()
+      },
+      () => setTimeout(() => this.handleRun(), 200)
     );
   };
 
   handleRun = () => {
+    this.setState({ runDisable: true });
     let bestSolutionLength = 10000;
     let longestSolutionLength = 0;
     const solutionsArray = [];
@@ -132,22 +134,25 @@ class App extends React.Component {
           solutionLength: solutionLength,
           longestSolutionLength: longestSolutionLength,
         });
-        console.log(bestSolutionLength);
+        // console.log(bestSolutionLength);
       }
     }
 
-    asyncForEach(solutionsArray, async element => {
-      await delay(100);
+    (async () => {
+      await asyncForEach(solutionsArray, async element => {
+        await delay(100);
 
-      this.setState(
-        {
-          machineMatrix: element.machineMatrix,
-          gantMatrix: element.gantMatrix,
-          solutionLength: element.longestSolutionLength,
-        },
-        console.log('setState: ' + element.solutionLength)
-      );
-    });
+        this.setState(
+          {
+            machineMatrix: element.machineMatrix,
+            gantMatrix: element.gantMatrix,
+            solutionLength: element.longestSolutionLength,
+          }
+          // console.log('setState: ' + element.solutionLength)
+        );
+      });
+      this.setState({ runDisable: false });
+    })().catch(e => console.log(e.stack));
   };
 
   handleChange = name => event => {
@@ -182,6 +187,7 @@ class App extends React.Component {
           className={classes.button}
           variant="contained"
           color="primary"
+          disabled={this.state.runDisable}
         >
           Run
         </Button>
