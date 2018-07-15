@@ -7,7 +7,11 @@ import ReactJson from 'react-json-view';
 
 import Container from './Container';
 
-import { generateJobMatrix, genJobStringMatrix } from './utility/JobMatrix';
+import {
+  generateJobMatrix,
+  genJobStringMatrix,
+  gernerateJobMatrixForBeginning,
+} from './utility/JobMatrix';
 import { genMachineOrder } from './utility/MachineMatrix';
 import { genMachineOrderForGant } from './utility/GantMatrix';
 import { getArrayWithJobNumber } from './utility/UtilityFunctions';
@@ -70,10 +74,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      machines: 8,
-      jobs: 9,
+      machines: 6,
+      jobs: 6,
       variants: 1000,
-      maxInterval: 6,
+      maxInterval: 10,
       jobsStr: '\n\n\n',
       jobMatrix: [],
       machineMatrix: [],
@@ -82,6 +86,17 @@ class App extends React.Component {
       runDisable: false,
     };
   }
+
+  componentDidMount = () => {
+    const jobMatrix = gernerateJobMatrixForBeginning();
+
+    const jobStr = genJobStringMatrix(jobMatrix, this.state.maxInterval);
+
+    this.setState({
+      jobMatrix: jobMatrix,
+      jobsStr: jobStr,
+    });
+  };
 
   handleGenerate = () => {
     const jobMatrix = generateJobMatrix(
@@ -140,7 +155,6 @@ class App extends React.Component {
           solutionLength: solutionLength,
           longestSolutionLength: longestSolutionLength,
         });
-        // console.log(bestSolutionLength);
       }
     }
 
@@ -148,14 +162,11 @@ class App extends React.Component {
       await asyncForEach(solutionsArray, async element => {
         await delay(100);
 
-        this.setState(
-          {
-            machineMatrix: element.machineMatrix,
-            gantMatrix: element.gantMatrix,
-            solutionLength: element.longestSolutionLength,
-          }
-          // console.log('setState: ' + element.solutionLength)
-        );
+        this.setState({
+          machineMatrix: element.machineMatrix,
+          gantMatrix: element.gantMatrix,
+          solutionLength: element.longestSolutionLength,
+        });
       });
       this.setState({ runDisable: false });
     })().catch(e => console.log(e.stack));
@@ -296,14 +307,12 @@ class App extends React.Component {
 
         <br />
         <br />
-        <br />
 
         <Container
           gantMatrix={this.state.gantMatrix}
           solutionLength={this.state.solutionLength}
         />
 
-        <br />
         <br />
         <br />
 

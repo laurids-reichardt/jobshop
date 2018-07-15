@@ -10,7 +10,7 @@ export function generateJobMatrix(jobs, machines, maxIntervalLength) {
     for (let j = 0; j < machines; j++) {
       job.push({
         machine: j,
-        interval: getRandomInt(1, maxIntervalLength)
+        interval: getRandomInt(1, maxIntervalLength),
       });
     }
     // shuffle machine lane order and push to matrix array
@@ -20,17 +20,14 @@ export function generateJobMatrix(jobs, machines, maxIntervalLength) {
   // for every task inside a job, add the earliest possible task start time
   for (let index = 0; index < jobs; index++) {
     let currentInterval = 0;
-    let counter = 0;
 
     matrix[index] = matrix[index].map(task => {
       let adjustedTask = {
-        number: counter,
         machine: task.machine,
         interval: task.interval,
-        start: currentInterval
+        start: currentInterval,
       };
       currentInterval += task.interval;
-      counter++;
       return adjustedTask;
     });
   }
@@ -52,157 +49,162 @@ export function genJobStringMatrix(matrix, maxIntervalLength) {
 }
 
 export function gernerateJobMatrixForBeginning() {
-  const jobMatrix = [
+  return [
     [
       {
         machine: 2,
-        interval: 1
+        interval: 1,
       },
       {
         machine: 0,
-        interval: 3
+        interval: 3,
       },
       {
         machine: 1,
-        interval: 6
+        interval: 6,
       },
       {
         machine: 3,
-        interval: 7
+        interval: 7,
       },
       {
         machine: 5,
-        interval: 3
+        interval: 3,
       },
       {
         machine: 4,
-        interval: 6
-      }
-    ][
-      ({
+        interval: 6,
+      },
+    ],
+    [
+      {
         machine: 1,
-        interval: 8
+        interval: 8,
       },
       {
         machine: 2,
-        interval: 5
+        interval: 5,
       },
       {
         machine: 4,
-        interval: 10
+        interval: 10,
       },
       {
         machine: 5,
-        interval: 10
+        interval: 10,
       },
       {
         machine: 0,
-        interval: 10
+        interval: 10,
       },
       {
         machine: 2,
-        interval: 5
-      })
-    ][
-      ({
+        interval: 5,
+      },
+    ],
+    [
+      {
         machine: 3,
-        interval: 4
+        interval: 4,
       },
       {
         machine: 3,
-        interval: 4
+        interval: 4,
       },
       {
         machine: 5,
-        interval: 8
+        interval: 8,
       },
       {
         machine: 0,
-        interval: 9
+        interval: 9,
       },
       {
         machine: 1,
-        interval: 1
+        interval: 1,
       },
       {
         machine: 4,
-        interval: 7
-      })
-    ][
-      ({
+        interval: 7,
+      },
+    ],
+    [
+      {
         machine: 1,
-        interval: 5
+        interval: 5,
       },
       {
         machine: 0,
-        interval: 5
+        interval: 5,
       },
       {
         machine: 2,
-        interval: 5
+        interval: 5,
       },
       {
         machine: 3,
-        interval: 3
+        interval: 3,
       },
       {
         machine: 4,
-        interval: 8
+        interval: 8,
       },
       {
         machine: 5,
-        interval: 9
-      })
-    ][
-      ({
+        interval: 9,
+      },
+    ],
+    [
+      {
         machine: 2,
-        interval: 9
+        interval: 9,
       },
       {
         machine: 1,
-        interval: 3
+        interval: 3,
       },
       {
         machine: 4,
-        interval: 5
+        interval: 5,
       },
       {
         machine: 5,
-        interval: 4
+        interval: 4,
       },
       {
         machine: 0,
-        interval: 3
+        interval: 3,
       },
       {
         machine: 3,
-        interval: 1
-      })
-    ][
-      ({
+        interval: 1,
+      },
+    ],
+    [
+      {
         machine: 1,
-        interval: 3
+        interval: 3,
       },
       {
         machine: 3,
-        interval: 3
+        interval: 3,
       },
       {
         machine: 5,
-        interval: 9
+        interval: 9,
       },
       {
         machine: 0,
-        interval: 10
+        interval: 10,
       },
       {
         machine: 4,
-        interval: 4
+        interval: 4,
       },
       {
         machine: 2,
-        interval: 1
-      })
-    ]
+        interval: 1,
+      },
+    ],
   ];
 }
