@@ -64,11 +64,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      machines: 9,
+      machines: 8,
       jobs: 9,
       variants: 1000,
-      maxInterval: 8,
-      jobsStr: '\n\n\n\n\n',
+      maxInterval: 6,
+      jobsStr: '\n\n\n',
       jobMatrix: [],
       machineMatrix: [],
       gantMatrix: [],
@@ -124,6 +124,7 @@ class App extends React.Component {
         bestSolutionLength = solutionLength;
 
         solutionsArray.push({
+          machineMatrix: machineMatrix,
           gantMatrix: makeMatrixCertainLength(
             gantMatrix,
             longestSolutionLength
@@ -140,6 +141,7 @@ class App extends React.Component {
 
       this.setState(
         {
+          machineMatrix: element.machineMatrix,
           gantMatrix: element.gantMatrix,
           solutionLength: element.longestSolutionLength,
         },
