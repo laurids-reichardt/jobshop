@@ -8,7 +8,7 @@ export function genMachineOrderForGant(
   const machineMatrix2 = JSON.parse(JSON.stringify(machineMatrix));
 
   //Initialising gantMatrix
-  const gantMatrix = [];
+  let gantMatrix = [];
   for (let index = 0; index < machinesAmount; index++) {
     gantMatrix.push([]);
   }
@@ -36,7 +36,12 @@ export function genMachineOrderForGant(
       }
     }
   }
-  console.log(gantDiagramValues(gantMatrix, machinesAmount));
+  // makes all machine lanes the same length
+  gantMatrix = makeMatrixArraysSameLength(gantMatrix);
+
+  // get total length of solution
+  console.log('Total runtime: ' + gantMatrix[0].length);
+
   return gantMatrix;
 }
 
@@ -107,4 +112,18 @@ function gantDiagramValues(gantMatrix, machinesAmount) {
     }
   }
   return totalRuntime;
+}
+
+function makeMatrixArraysSameLength(gantMatrix) {
+  const lengthsArr = gantMatrix.map(machine => machine.length);
+  const maxInterval = Math.max(...lengthsArr);
+
+  return gantMatrix.map(machine => {
+    const diff = maxInterval - machine.length;
+    if (diff > 0) {
+      return machine.concat(getArrayWithJobNumber(diff, -1));
+    } else {
+      return machine;
+    }
+  });
 }
