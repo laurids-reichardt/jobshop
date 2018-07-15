@@ -1,4 +1,4 @@
-import { getRandomInt, shuffle } from "./UtilityFunctions.js";
+import { getRandomInt, shuffle } from './UtilityFunctions.js';
 
 export function generateJobMatrix(jobs, machines, maxIntervalLength) {
   const matrix = [];
@@ -10,7 +10,7 @@ export function generateJobMatrix(jobs, machines, maxIntervalLength) {
     for (let j = 0; j < machines; j++) {
       job.push({
         machine: j,
-        interval: getRandomInt(1, maxIntervalLength)
+        interval: getRandomInt(1, maxIntervalLength),
       });
     }
     // shuffle machine lane order and push to matrix array
@@ -27,7 +27,7 @@ export function generateJobMatrix(jobs, machines, maxIntervalLength) {
         number: counter,
         machine: task.machine,
         interval: task.interval,
-        start: currentInterval
+        start: currentInterval,
       };
       currentInterval += task.interval;
       counter++;
@@ -38,13 +38,15 @@ export function generateJobMatrix(jobs, machines, maxIntervalLength) {
   return matrix;
 }
 
-export function genJobStringMatrix(matrix) {
-  let str = `Jobs: ${matrix.length} Machines: ${matrix[0].length} \n\n`;
+export function genJobStringMatrix(matrix, maxIntervalLength) {
+  let str = `Jobs: ${matrix.length}   Machines: ${
+    matrix[0].length
+  }   Max Interval: ${maxIntervalLength} \n`;
   matrix.forEach(job => {
+    str += '\n';
     job.forEach(task => {
       str += `${task.machine} ${task.interval}   `;
     });
-    str += "\n";
   });
   return str;
 }

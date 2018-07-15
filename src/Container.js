@@ -2,53 +2,44 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 // import Typography from '@material-ui/core/Typography';
 
-// import lightBlue from '@material-ui/core/colors/lightBlue';
-// import cyan from '@material-ui/core/colors/cyan';
-// import teal from '@material-ui/core/colors/teal';
-// import green from '@material-ui/core/colors/green';
-// import lightGreen from '@material-ui/core/colors/lightGreen';
-// import lime from '@material-ui/core/colors/lime';
-
 import Element from './Element';
-// import { isEqual } from './utility/UtilityFunctions';
+import IntervalLegend from './IntervalLegend';
 
 const flatten = list =>
   list.reduce((a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []);
 
 const styles = theme => ({
   root: {
+    width: '100%',
+  },
+  gantDiagram: {
     // width: theme.spacing.unit * 108,
     // height: theme.spacing.unit * 36,
     display: 'grid',
     gridTemplateColumns: 'repeat(var(--maxInterval), 1fr)',
-    gridTemplateRows: `repeat(var(--lanes), ${theme.spacing.unit * 8}px)`,
+    gridTemplateRows: `repeat(var(--lanes), ${theme.spacing.unit * 5}px)`,
   },
 });
 
 class Container extends React.Component {
-  state = {
-    lanes: 2,
-    maxInterval: 6,
-    gantMatrix: [],
-  };
-
   render() {
     const { classes } = this.props;
     let counter = 0;
+    let counter2 = 1;
     return (
-      <div
-        className={classes.root}
-        style={{
-          '--maxInterval':
-            this.props.gantMatrix.length > 0
-              ? this.props.gantMatrix[0].length
-              : 0,
-          '--lanes': this.props.gantMatrix.length,
-        }}
-      >
-        {flatten(this.props.gantMatrix).map(num => (
-          <Element key={counter++} value={num} />
-        ))}
+      <div className={classes.root}>
+        <div
+          className={classes.gantDiagram}
+          style={{
+            '--maxInterval': this.props.solutionLength,
+            '--lanes': this.props.gantMatrix.length,
+          }}
+        >
+          {flatten(this.props.gantMatrix).map(num => (
+            <Element key={counter++} value={num} />
+          ))}
+        </div>
+        <IntervalLegend solutionLength={this.props.solutionLength} />
       </div>
     );
   }

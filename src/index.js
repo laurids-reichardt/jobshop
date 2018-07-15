@@ -24,8 +24,8 @@ const types = {
 
 const theme = createMuiTheme({
   palette: {
-    ...types.dark,
-    // ...types.darkBlue,
+    // ...types.dark,
+    ...types.darkBlue,
     primary: blue,
   },
   customContainerWidth: '768px',

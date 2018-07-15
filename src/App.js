@@ -49,90 +49,10 @@ class App extends React.Component {
       variants: 100,
       maxInterval: 5,
       jobsStr: '\n\n\n\n\n',
-      jobMatrix: [
-        [
-          {
-            number: 0,
-            machine: 0,
-            interval: 2,
-            start: 0,
-          },
-          {
-            number: 1,
-            machine: 1,
-            interval: 3,
-            start: 2,
-          },
-          {
-            number: 2,
-            machine: 2,
-            interval: 4,
-            start: 5,
-          },
-        ],
-        [
-          {
-            number: 0,
-            machine: 0,
-            interval: 4,
-            start: 0,
-          },
-          {
-            number: 1,
-            machine: 2,
-            interval: 3,
-            start: 4,
-          },
-          {
-            number: 2,
-            machine: 1,
-            interval: 5,
-            start: 7,
-          },
-        ],
-        [
-          {
-            number: 0,
-            machine: 0,
-            interval: 4,
-            start: 0,
-          },
-          {
-            number: 1,
-            machine: 1,
-            interval: 3,
-            start: 4,
-          },
-          {
-            number: 2,
-            machine: 2,
-            interval: 2,
-            start: 7,
-          },
-        ],
-        [
-          {
-            number: 0,
-            machine: 1,
-            interval: 1,
-            start: 0,
-          },
-          {
-            number: 1,
-            machine: 2,
-            interval: 2,
-            start: 1,
-          },
-          {
-            number: 2,
-            machine: 0,
-            interval: 4,
-            start: 3,
-          },
-        ],
-      ],
+      jobMatrix: [],
       machineMatrix: [],
       gantMatrix: [],
+      solutionLength: 0,
     };
   }
 
@@ -143,12 +63,15 @@ class App extends React.Component {
       this.state.maxInterval
     );
 
-    const jobStr = genJobStringMatrix(jobMatrix);
+    const jobStr = genJobStringMatrix(jobMatrix, this.state.maxInterval);
 
-    this.setState({
-      jobMatrix: jobMatrix,
-      jobsStr: jobStr,
-    });
+    this.setState(
+      {
+        jobMatrix: jobMatrix,
+        jobsStr: jobStr,
+      }
+      // this.handleRun()
+    );
   };
 
   handleRun = () => {
@@ -165,9 +88,12 @@ class App extends React.Component {
       this.state.jobs
     );
 
+    const solutionLength = gantMatrix.length > 0 ? gantMatrix[0].length : 0;
+
     this.setState({
       machineMatrix: machineMatrix,
       gantMatrix: gantMatrix,
+      solutionLength: solutionLength,
     });
   };
 
@@ -262,9 +188,16 @@ class App extends React.Component {
         />
 
         <br />
+        <br />
+        <br />
 
-        <Container gantMatrix={this.state.gantMatrix} />
+        <Container
+          gantMatrix={this.state.gantMatrix}
+          solutionLength={this.state.solutionLength}
+        />
 
+        <br />
+        <br />
         <br />
 
         <div className={classes.jsonViewContainer}>
