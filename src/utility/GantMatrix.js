@@ -40,7 +40,7 @@ export function genMachineOrderForGant(
   gantMatrix = makeMatrixArraysSameLength(gantMatrix);
 
   // get total length of solution
-  console.log('Total runtime: ' + gantMatrix[0].length);
+  console.log("Total runtime: " + gantMatrix[0].length);
 
   return gantMatrix;
 }
@@ -102,16 +102,6 @@ function searchFreeTimeSlot(gantMatrix, task, nextJobNumber, jobMatrix2) {
       jobMatrix2[nextJobNumber][0].start = taskStartTime;
     }
   } while (bool === false);
-}
-
-function gantDiagramValues(gantMatrix, machinesAmount) {
-  let totalRuntime = 0;
-  for (let index = 0; index < machinesAmount; index++) {
-    if (gantMatrix[index].length > totalRuntime) {
-      totalRuntime = gantMatrix[index].length;
-    }
-  }
-  return totalRuntime;
 }
 
 function makeMatrixArraysSameLength(gantMatrix) {
