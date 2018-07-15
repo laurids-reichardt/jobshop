@@ -10,7 +10,7 @@ export function generateJobMatrix(jobs, machines, maxIntervalLength) {
     for (let j = 0; j < machines; j++) {
       job.push({
         machine: j,
-        interval: getRandomInt(1, maxIntervalLength)
+        interval: getRandomInt(1, maxIntervalLength),
       });
     }
     // shuffle machine lane order and push to matrix array
@@ -27,7 +27,7 @@ export function generateJobMatrix(jobs, machines, maxIntervalLength) {
         number: counter,
         machine: task.machine,
         interval: task.interval,
-        start: currentInterval
+        start: currentInterval,
       };
       currentInterval += task.interval;
       counter++;

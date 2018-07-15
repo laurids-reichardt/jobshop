@@ -33,26 +33,26 @@ function makeMatrixCertainLength(matrix, minLength) {
 
 const styles = theme => ({
   App: {
-    padding: theme.spacing.unit * 4
+    padding: theme.spacing.unit * 4,
   },
   button: {
     margin: theme.spacing.unit * 2,
-    marginLeft: 0
+    marginLeft: 0,
   },
   numberInput: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 50
+    width: 50,
   },
   maxIntervalLengthInput: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 150
+    width: 150,
   },
   multiline: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 320
+    width: 320,
   },
   jsonViewContainer: {
     width: '100%',
@@ -73,7 +73,7 @@ class App extends React.Component {
       machineMatrix: [],
       gantMatrix: [],
       solutionLength: 0,
-      runDisable: false
+      runDisable: false,
     };
   }
 
@@ -89,7 +89,7 @@ class App extends React.Component {
     this.setState(
       {
         jobMatrix: jobMatrix,
-        jobsStr: jobStr
+        jobsStr: jobStr,
       },
       () => setTimeout(() => this.handleRun(), 200)
     );
@@ -132,7 +132,7 @@ class App extends React.Component {
             longestSolutionLength
           ),
           solutionLength: solutionLength,
-          longestSolutionLength: longestSolutionLength
+          longestSolutionLength: longestSolutionLength,
         });
         // console.log(bestSolutionLength);
       }
@@ -146,7 +146,7 @@ class App extends React.Component {
           {
             machineMatrix: element.machineMatrix,
             gantMatrix: element.gantMatrix,
-            solutionLength: element.longestSolutionLength
+            solutionLength: element.longestSolutionLength,
           }
           // console.log('setState: ' + element.solutionLength)
         );
@@ -160,7 +160,7 @@ class App extends React.Component {
     let value = event.target.value > 9 ? 9 : event.target.value;
     value = event.target.value < 1 ? 1 : value;
     this.setState({
-      [name]: value
+      [name]: value,
       // [name]: event.target.value,
     });
   };
