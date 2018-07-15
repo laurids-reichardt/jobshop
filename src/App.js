@@ -210,9 +210,9 @@ class App extends React.Component {
           the problem with the following conditions:
           <ol>
             <li>
-              A task of a job can only be done when the previous task is done.
+              A task of a job can only start if the previous task is completed.
             </li>
-            <li>One machine can only process one task.</li>
+            <li>A machine can only process one task at a time.</li>
           </ol>
           As default the benchmark matrix
           <a
