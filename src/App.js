@@ -222,7 +222,7 @@ class App extends React.Component {
             {' '}
             Fisher and Thompson 06{' '}
           </a>
-          is loaded. After clicking on "RUN" our algorithm shows the best gant
+          is loaded. After clicking on "RUN" our algorithm shows the best Gantt
           diagram for the benchmark matrix after a 1000 random runs. To generate
           another random job matrix click on "GENERATE". You can adjust the
           generated job matrix by editing the setting values "Machines", "Jobs",
@@ -337,7 +337,7 @@ class App extends React.Component {
           />
 
           <ReactJson
-            name="gantMatrix"
+            name="ganttMatrix"
             src={this.state.gantMatrix}
             theme="flat"
             enableClipboard={false}
